@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu>
+    <drink name="Run n Coke">
+        <name>Run and Coke</name>
+        <ingredient>
+            <spirit>
+                <name>Rum</name>
+                <quantity>1</quantity>
+            </spirit>
+            <mixer>
+                <name>Coke</name>
+                <quantity>1</quantity>
+            </mixer>
+        </ingredient>
+    </drink>
+</menu>
