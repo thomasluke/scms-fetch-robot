@@ -6,6 +6,6 @@
     
 
     <!-- Disco -->
-    <!-- <node name="disco" pkg="scms_test" type="disco.py" output="screen" /> -->
+    <node name="disco" pkg="scms_test" type="disco.py" output="screen" />
 
 </launch>
