@@ -3,4 +3,9 @@
     <!-- Launch Gazebo with robot -->
     <include file="$(find fetch_gazebo)/launch/simulation.launch" />
 
+    <!-- Start MoveIt -->
+    <include file="$(find fetch_moveit_config)/launch/move_group.launch">
+        <arg name="info" value="true"/>
+    </include>
+
 </launch>
