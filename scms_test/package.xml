@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>scms_test</name>
+  <version>1.0.0</version>
+  <description>
+    SCMS Gazebo package for Fetch.
+  </description>
+  <author>Connor Boughton</author>
+  <maintainer email="connor.boughton@student.uts.edu.au">Connor Boughton</maintainer>
+
+  <license>BSD</license>
+  <url>http://ros.org/wiki/fetch_gazebo</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>actionlib</exec_depend>
+  <exec_depend>fetch_gazebo</exec_depend>
+  <exec_depend>fetch_moveit_config</exec_depend>
+  <exec_depend>fetch_navigation</exec_depend>
+  <exec_depend>moveit_commander</exec_depend>
+  <exec_depend>moveit_python</exec_depend>
+  <exec_depend>simple_grasping</exec_depend>
+</package>

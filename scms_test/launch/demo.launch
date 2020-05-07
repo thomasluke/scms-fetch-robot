@@ -1,0 +1,14 @@
+<launch>
+    <arg name="simulator" default="gazebo"/>
+
+    <!-- <include file="$(find scms_test)/launch/$(arg simulator).launch" /> -->
+
+    <!-- Start MoveIt -->
+    <include file="$(find fetch_moveit_config)/launch/move_group.launch">
+        <arg name="info" value="true"/>
+    </include>
+
+    <!-- Disco -->
+    <node name="disco" pkg="scms_test" type="disco.py" output="screen" />
+
+</launch>

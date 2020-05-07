@@ -1,0 +1,6 @@
+<launch>
+
+    <!-- Launch Gazebo with robot -->
+    <include file="$(find fetch_gazebo)/launch/simulation.launch" />
+
+</launch>

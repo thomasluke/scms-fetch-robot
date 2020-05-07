@@ -1,0 +1,14 @@
+# Build Directories
+build/
+*-build/
+build-*/
+
+# QT Build Artifacts
+CMakeLists.txt.use*
+
+#VS Code Artifacts
+ipch/
+
+# VSCODE
+*.vscode
+*.code-workspace
