@@ -172,7 +172,7 @@ int main(int argc, char **argv)
   // Let's specify a path constraint and a pose goal for our group.
   // First define the path constraint.
   moveit_msgs::OrientationConstraint ocm;  
-  ocm.link_name = "r_wrist_roll_link";  
+  ocm.link_name = "wrist_roll_link";  
   ocm.header.frame_id = "base_link";
   ocm.orientation.w = 1.0;
   ocm.absolute_x_axis_tolerance = 0.1;
@@ -334,9 +334,9 @@ int main(int argc, char **argv)
   // First define a new group for addressing the two arms. Then define 
   // two separate pose goals, one for each end-effector. Note that 
   // we are reusing the goal for the right arm above
-  moveit::planning_interface::MoveGroupInterface two_arms_group("arms");
+  moveit::planning_interface::MoveGroupInterface two_arms_group("arm_with_torso");
 
-  two_arms_group.setPoseTarget(target_pose1, "r_wrist_roll_link");
+  two_arms_group.setPoseTarget(target_pose1, "wrist_roll_link");
 
   geometry_msgs::Pose target_pose2;
   target_pose2.orientation.w = 1.0;
@@ -344,7 +344,7 @@ int main(int argc, char **argv)
   target_pose2.position.y = 0.15;
   target_pose2.position.z = 1.0;
 
-  two_arms_group.setPoseTarget(target_pose2, "l_wrist_roll_link");
+  two_arms_group.setPoseTarget(target_pose2, "wrist_roll_link");
 
   // Now, we can plan and visualize
   moveit::planning_interface::MoveGroupInterface::Plan two_arms_plan;
