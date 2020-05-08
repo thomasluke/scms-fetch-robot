@@ -1,23 +1,58 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>arm_movement</name>
-  <version>1.0.0</version>
-  <description>
-    SCMS Gazebo package for Fetch.
-  </description>
-  <author>Connor Boughton</author>
-  <maintainer email="connor.boughton@student.uts.edu.au">Connor Boughton</maintainer>
+    <name>arm_movement</name>
+    <version>1.0.0</version>
+    <description>
+    SCMS arm movement package for Fetch.
+    </description>
+    <author>Connor Boughton</author>
+    <maintainer email="connor.boughton@student.uts.edu.au">Connor Boughton</maintainer>
 
-  <license>BSD</license>
-  <url>http://ros.org/wiki/fetch_gazebo</url>
+    <license>BSD</license>
+    <url>http://ros.org/wiki/fetch_gazebo</url>
 
-  <buildtool_depend>catkin</buildtool_depend>
+    <buildtool_depend>catkin</buildtool_depend>
 
-  <exec_depend>actionlib</exec_depend>
-  <exec_depend>fetch_gazebo</exec_depend>
-  <exec_depend>fetch_moveit_config</exec_depend>
-  <exec_depend>fetch_navigation</exec_depend>
-  <exec_depend>moveit_commander</exec_depend>
-  <exec_depend>moveit_python</exec_depend>
-  <exec_depend>simple_grasping</exec_depend>
+
+    <build_depend>pluginlib</build_depend>
+    <build_depend>eigen</build_depend>
+    <build_depend>moveit_core</build_depend>
+    <build_depend>moveit_ros_planning</build_depend>
+    <build_depend>moveit_ros_planning_interface</build_depend>
+    <build_depend>moveit_ros_perception</build_depend>
+    <build_depend>interactive_markers</build_depend>
+    <build_depend>geometric_shapes</build_depend>
+    <build_depend>moveit_visual_tools</build_depend>
+    <build_depend>pcl_ros</build_depend>
+    <build_depend>pcl_conversions</build_depend>
+    <build_depend>rosbag</build_depend>
+    <build_depend>tf2_ros</build_depend>
+    <build_depend>tf2_eigen</build_depend>
+    <build_depend>tf2_geometry_msgs</build_depend>
+
+    <exec_depend>pluginlib</exec_depend>
+    <exec_depend>eigen</exec_depend>
+    <exec_depend>moveit_core</exec_depend>
+    <exec_depend>moveit_ros_planning</exec_depend>
+    <exec_depend>moveit_ros_planning_interface</exec_depend>
+    <exec_depend>moveit_ros_perception</exec_depend>
+    <exec_depend>interactive_markers</exec_depend>
+    <exec_depend>geometric_shapes</exec_depend>
+    <exec_depend>moveit_visual_tools</exec_depend>
+    <exec_depend>pcl_ros</exec_depend>
+    <exec_depend>pcl_conversions</exec_depend>
+    <exec_depend>rosbag</exec_depend>
+    <exec_depend>tf2_ros</exec_depend>
+    <exec_depend>tf2_eigen</exec_depend>
+    <exec_depend>tf2_geometry_msgs</exec_depend>
+
+    <test_depend>moveit_resources</test_depend>
+
+    <exec_depend>actionlib</exec_depend>
+    <exec_depend>fetch_gazebo</exec_depend>
+    <exec_depend>fetch_moveit_config</exec_depend>
+    <exec_depend>fetch_navigation</exec_depend>
+    <exec_depend>moveit_commander</exec_depend>
+    <exec_depend>moveit_python</exec_depend>
+    <exec_depend>simple_grasping</exec_depend>
 </package>
