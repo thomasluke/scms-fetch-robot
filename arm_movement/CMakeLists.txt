@@ -12,7 +12,7 @@ find_package(catkin REQUIRED
     moveit_core
     moveit_visual_tools
     moveit_ros_planning
-    moveit_ros_planning_interfacef
+    moveit_ros_planning_interface
     moveit_ros_perception
     pluginlib
     geometric_shapes
@@ -55,11 +55,11 @@ add_executable(arm_movement src/main.cpp)
 target_link_libraries(arm_movement ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 install(TARGETS arm_movement DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
-# # install(
-# #   PROGRAMS
-# #     scripts/disco.py
-# #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# # )
+install(
+  PROGRAMS
+    scripts/disco.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 install(
   DIRECTORY launch
