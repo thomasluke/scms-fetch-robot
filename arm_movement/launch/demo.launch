@@ -3,9 +3,9 @@
 
     <!-- <include file="$(find arm_movement)/launch/$(arg simulator).launch" /> -->
 
-    
 
-    <!-- Disco -->
-    <node name="disco" pkg="arm_movement" type="disco.py" output="screen" />
+
+    <!-- C++ -->
+    <node name="arm_movement" pkg="arm_movement" type="arm_movement" respawn="false" output="screen"/>
 
 </launch>
