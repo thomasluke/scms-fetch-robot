@@ -478,8 +478,8 @@ int main(int argc, char **argv)
 
     geometry_msgs::Pose target_pose1;
 
-    target_pose1.orientation.w = 1.0;
-    target_pose1.position.x = 0.5;
+    target_pose1.orientation.w = 1.0; 
+    target_pose1.position.x = 0.7; // Distance away from robot (distance to the bottles)
     // target_pose1.position.y = -0.7;
     // target_pose1.position.z = 1.0;
 
@@ -509,7 +509,7 @@ int main(int argc, char **argv)
 
     ROS_INFO("Visualizing plan 1 (pose goal) %s", success ? "" : "FAILED");
     /* Sleep to give Rviz time to visualize the plan. */
-    sleep(5.0);
+    //sleep(5.0);
 
     // // Visualizing plans
     // // ^^^^^^^^^^^^^^^^^
