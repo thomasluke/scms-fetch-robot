@@ -1,11 +1,11 @@
 <launch>
     <arg name="simulator" default="gazebo"/>
 
-    <!-- <include file="$(find scms_test)/launch/$(arg simulator).launch" /> -->
+    <!-- <include file="$(find arm_movement)/launch/$(arg simulator).launch" /> -->
 
-    
 
-    <!-- Disco -->
-    <!-- <node name="disco" pkg="scms_test" type="disco.py" output="screen" /> -->
+
+    <!-- C++ -->
+    <node name="arm_movement" pkg="arm_movement" type="arm_movement" respawn="false" output="screen"/>
 
 </launch>

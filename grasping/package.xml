@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package format="2">
-    <name>arm_movement</name>
+    <name>grasping</name>
     <version>1.0.0</version>
     <description>
-    SCMS arm movement package for Fetch.
+    SCMS Grasping package for Fetch.
     </description>
     <author>Connor Boughton</author>
     <maintainer email="connor.boughton@student.uts.edu.au">Connor Boughton</maintainer>

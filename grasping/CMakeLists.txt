@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.7.2)
-project(arm_movement)
+project(grasping)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -51,15 +51,15 @@ include_directories(${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_
 
 # add_subdirectory(move_group_interface)
 
-add_executable(arm_movement src/main.cpp)
-target_link_libraries(arm_movement ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-install(TARGETS arm_movement DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+add_executable(grasping src/main.cpp)
+target_link_libraries(grasping ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS grasping DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
-install(
-  PROGRAMS
-    scripts/disco.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+# # install(
+# #   PROGRAMS
+# #     scripts/disco.py
+# #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# # )
 
 install(
   DIRECTORY launch

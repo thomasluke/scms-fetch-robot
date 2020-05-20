@@ -1,0 +1,6 @@
+<launch>
+
+    <!-- Launch Gazebo with robot -->
+    <include file="$(find fetch_moveit_config )/launch/demo.launch" />
+
+</launch>
