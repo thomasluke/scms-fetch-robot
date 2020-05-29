@@ -162,6 +162,55 @@ int main(int argc, char **argv)
     /* Sleep to give Rviz time to visualize the plan. */
     //sleep(5.0);
 
+    // geometry_msgs::Pose target_gripper;
+    
+
+    // target_gripper.orientation.w = 1.0;
+    // target_gripper.position.x = 0.7; // Distance away from robot (distance to the bottles)
+    // // target_gripper.position.y = -0.7;
+    // // target_gripper.position.z = 1.0;
+
+    // // std::cout << "Please select orientation" << std::endl;
+    // // std::cin >> target_gripper.orientation.w;
+
+    // // std::cout << "Please select x position" << std::endl;
+    // // std::cin >> target_gripper.position.x;
+
+    // std::cout << "Please select y position" << std::endl;
+    // std::cin >> target_gripper.position.y;
+
+    // std::cout << "Please select z position" << std::endl;
+    // std::cin >> target_gripper.position.z;
+
+    // gripper.setPoseTarget(target_gripper);
+
+    // // Now, we call the planner to compute the plan
+    // // and visualize it.
+    // // Note that we are just planning, not asking move_group
+    // // to actually move the robot.
+    // moveit::planning_interface::MoveGroupInterface::Plan gripper_plan;
+
+    // //bool success = group.plan(my_plan);
+
+    // success = (group.plan(gripper_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+
+    // ROS_INFO("Visualizing plan 1 (pose goal) %s", success ? "" : "FAILED");
+    // /* Sleep to give Rviz time to visualize the plan. */
+    // //sleep(5.0);
+
+    // gripper.move();
+
+
+    // ROS_INFO("Visualizing gripper plan (grip bottle) %s",
+    //          success ? "" : "FAILED");
+    // /* Sleep to give Rviz time to visualize the plan. */
+    // sleep(10.0);
+
+    // //gripper.pick("gripper",false);
+    group.pick("gripper", false);
+
+    group.setStartState()
+
     // // Visualizing plans
     // // ^^^^^^^^^^^^^^^^^
     // // Now that we have a plan we can visualize it in Rviz.  This is not
@@ -239,10 +288,10 @@ int main(int argc, char **argv)
     //   // state to a new pose.
     //   robot_state::RobotState start_state(*group.getCurrentState());
     //   geometry_msgs::Pose start_pose2;
-    //   start_pose2.orientation.w = target_pose1.orientation.w;
-    //   start_pose2.position.x = target_pose1.position.x;
-    //   start_pose2.position.y = target_pose1.position.x;
-    //   start_pose2.position.z = target_pose1.position.x;
+    //   start_pose2.orientation.w = target_gripper.orientation.w;
+    //   start_pose2.position.x = target_gripper.position.x;
+    //   start_pose2.position.y = target_gripper.position.x;
+    //   start_pose2.position.z = target_gripper.position.x;
     //   const robot_state::JointModelGroup *joint_model_group =
     //                   start_state.getJointModelGroup(group.getName());
     //   start_state.setFromIK(joint_model_group, start_pose2);
@@ -250,7 +299,7 @@ int main(int argc, char **argv)
 
     //   // Now we will plan to the earlier pose target from the new
     //   // start state that we have just created.
-    //   group.setPoseTarget(target_pose1);
+    //   group.setPoseTarget(target_gripper);
     //  // success = group.plan(my_plan);
     //    success = (group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
 
@@ -346,32 +395,28 @@ int main(int argc, char **argv)
     //success = group.plan(my_plan);
     success = (group.plan(my_plan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
 
-
     ROS_INFO("Visualizing plan 5 (pose goal move around box) %s",
              success ? "" : "FAILED");
     /* Sleep to give Rviz time to visualize the plan. */
     sleep(10.0);
 
-        group.move();
+    group.move();
 
     //moveit::planning_interface::MoveGroupInterface::Plan gripper_plan;
 
-
-
-// Now when we plan a trajectory it will avoid the obstacle
-   // gripper.setStartState(*gripper.getCurrentState());
+    // Now when we plan a trajectory it will avoid the obstacle
+    // gripper.setStartState(*gripper.getCurrentState());
     //gripper.setPoseTarget(target_pose1);
     //success = group.plan(my_plan);
-   //success = (gripper.planGraspsAndPick(gripper_plan,false) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    //success = (gripper.planGraspsAndPick(gripper_plan,false) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
 
+    // ROS_INFO("Visualizing gripper plan (grip bottle) %s",
+    //          success ? "" : "FAILED");
+    // /* Sleep to give Rviz time to visualize the plan. */
+    // sleep(10.0);
 
-    ROS_INFO("Visualizing gripper plan (grip bottle) %s",
-             success ? "" : "FAILED");
-    /* Sleep to give Rviz time to visualize the plan. */
-    sleep(10.0);
-
-        //gripper.pick("gripper",false);
-        group.pick("gripper",false);
+    // //gripper.pick("gripper",false);
+    // group.pick("gripper", false);
 
     //   // Now, let's attach the collision object to the robot.
     //   ROS_INFO("Attach the object to the robot");
