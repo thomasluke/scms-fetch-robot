@@ -1,8 +1,7 @@
 <?xml version='1.0'?>
 <sdf version="1.5">
-    <model name='Gin'>
-        <static>false</static>
-        <link name="body">
+    <model name='gin'>
+        <link name="link">
             <inertial>
                 <mass>0.890</mass>
                 <inertia>
@@ -14,6 +13,14 @@
                     <izz>0.00019</izz>
                 </inertia>
             </inertial>
+            <collision name="collision">
+                <pose>0 0 0.135 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>0.070 0.070 0.27</size>
+                    </box>
+                </geometry>
+            </collision>
             <visual name="visual">
                 <geometry>
                     <mesh>
@@ -21,14 +28,6 @@
                     </mesh>
                 </geometry>
             </visual>
-            <collision name="collision">
-            <pose>0 0 0.135 0 0 0</pose>
-                <geometry>
-                    <box>
-                        <size>0.070 0.070 0.27</size>
-                    </box>
-                </geometry>
-            </collision>
         </link>
     </model>
 </sdf>
