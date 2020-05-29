@@ -206,8 +206,8 @@ int main(int argc, char **argv)
     // /* Sleep to give Rviz time to visualize the plan. */
     // sleep(10.0);
 
-    // //gripper.pick("gripper",false);
-    group.pick("gripper", false);
+    gripper.pick("gripper",false);
+    // group.pick("gripper", false);
 
     //group.setStartState()
 
