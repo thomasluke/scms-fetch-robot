@@ -209,7 +209,7 @@ int main(int argc, char **argv)
     // //gripper.pick("gripper",false);
     group.pick("gripper", false);
 
-    group.setStartState()
+    //group.setStartState()
 
     // // Visualizing plans
     // // ^^^^^^^^^^^^^^^^^
