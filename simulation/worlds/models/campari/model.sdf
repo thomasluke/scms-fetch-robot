@@ -17,7 +17,7 @@
             <visual name="visual">
                 <geometry>
                     <mesh>
-                        <uri>model://vodka/vodka.dae</uri>
+                        <uri>model://campari/campari.dae</uri>
                     </mesh>
                 </geometry>
             </visual>
