@@ -1,0 +1,34 @@
+<?xml version='1.0'?>
+<sdf version="1.5">
+    <model name='Vodka'>
+        <static>false</static>
+        <link name="body">
+            <inertial>
+                <mass>0.890</mass>
+                <inertia>
+                    <ixx>0.00058</ixx>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyy>0.00058</iyy>
+                    <iyz>0</iyz>
+                    <izz>0.00019</izz>
+                </inertia>
+            </inertial>
+            <visual name="visual">
+                <geometry>
+                    <mesh>
+                        <uri>model://campari/campari.dae</uri>
+                    </mesh>
+                </geometry>
+            </visual>
+            <collision name="collision">
+            <pose>0 0 0.135 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>0.070 0.070 0.27</size>
+                    </box>
+                </geometry>
+            </collision>
+        </link>
+    </model>
+</sdf>

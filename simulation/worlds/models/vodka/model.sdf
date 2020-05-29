@@ -1,9 +1,8 @@
 <?xml version='1.0'?>
 <sdf version="1.5">
-    <model name='Liquor'>
-        <!-- <static>true</static> -->
+    <model name='Vodka'>
+        <static>false</static>
         <link name="body">
-            <pose>0 0 0.16 0 0 0</pose>
             <inertial>
                 <mass>0.890</mass>
                 <inertia>
@@ -16,17 +15,17 @@
                 </inertia>
             </inertial>
             <visual name="visual">
-                <pose>-0.038 -0.038 -0.16 0 0 0</pose>
                 <geometry>
                     <mesh>
-                        <uri>model://liquor/meshes/model.dae</uri>
+                        <uri>model://vodka/vodka.dae</uri>
                     </mesh>
                 </geometry>
             </visual>
             <collision name="collision">
+            <pose>0 0 0.135 0 0 0</pose>
                 <geometry>
                     <box>
-                        <size>0.074 0.074 0.32</size>
+                        <size>0.070 0.070 0.27</size>
                     </box>
                 </geometry>
             </collision>
