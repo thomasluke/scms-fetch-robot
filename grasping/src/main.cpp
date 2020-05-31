@@ -159,8 +159,8 @@ int main(int argc, char **argv)
 
     moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
     moveit::planning_interface::MoveGroupInterface arm("arm_with_torso");
-    moveit::planning_interface::MoveGroupInterface group("gripper");
-    group.setPlanningTime(45.0);
+    moveit::planning_interface::MoveGroupInterface gripper("gripper");
+    gripper.setPlanningTime(45.0);
 
     ros::WallDuration(1.0).sleep(); //< Uses system time to delay for 1.0 second.
 
