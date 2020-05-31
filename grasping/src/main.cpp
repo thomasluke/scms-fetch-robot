@@ -103,7 +103,7 @@ void pick(moveit::planning_interface::MoveGroupInterface &move_group)
     // of the cube). |br|
     // Therefore, the position for panda_link8 = 5 - (length of cube/2 - distance b/w panda_link8 and palm of eef - some
     // extra padding)
-    grasps[0].grasp_pose.header.frame_id = "panda_link0";
+    grasps[0].grasp_pose.header.frame_id = "gripper";
     tf2::Quaternion orientation;
     orientation.setRPY(-M_PI / 2, -M_PI / 4, -M_PI / 2);
     grasps[0].grasp_pose.pose.orientation = tf2::toMsg(orientation);
@@ -114,7 +114,7 @@ void pick(moveit::planning_interface::MoveGroupInterface &move_group)
     // Setting pre-grasp approach
     // ++++++++++++++++++++++++++
     /* Defined with respect to frame_id */
-    grasps[0].pre_grasp_approach.direction.header.frame_id = "panda_link0";
+    grasps[0].pre_grasp_approach.direction.header.frame_id = "gripper";
     /* Direction is set as positive x axis */
     grasps[0].pre_grasp_approach.direction.vector.x = 1.0;
     grasps[0].pre_grasp_approach.min_distance = 0.095;
@@ -123,7 +123,7 @@ void pick(moveit::planning_interface::MoveGroupInterface &move_group)
     // Setting post-grasp retreat
     // ++++++++++++++++++++++++++
     /* Defined with respect to frame_id */
-    grasps[0].post_grasp_retreat.direction.header.frame_id = "panda_link0";
+    grasps[0].post_grasp_retreat.direction.header.frame_id = "gripper";
     /* Direction is set as positive z axis */
     grasps[0].post_grasp_retreat.direction.vector.z = 1.0;
     grasps[0].post_grasp_retreat.min_distance = 0.1;
@@ -150,7 +150,7 @@ void pick(moveit::planning_interface::MoveGroupInterface &move_group)
 
 int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "fetch_grasp");
+    ros::init(argc, argv, "demo");
     ros::NodeHandle node_handle;
     ros::AsyncSpinner spinner(1);
     spinner.start();
@@ -160,15 +160,15 @@ int main(int argc, char **argv)
     moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
     moveit::planning_interface::MoveGroupInterface arm("arm_with_torso");
     moveit::planning_interface::MoveGroupInterface gripper("gripper");
-    arm.setPlanningTime(45.0);
+    gripper.setPlanningTime(45.0);
 
     ros::WallDuration(1.0).sleep(); //< Uses system time to delay for 1.0 second.
 
-    pick(gripper);
+    pick(arm);
 
     ros::WallDuration(1.0).sleep(); //< Uses system time to delay for 1.0 second.
 
-    // place(gripper);
+    //place(arm);
 
     ros::shutdown();
 
