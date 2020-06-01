@@ -1,160 +1,160 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MenuWindow</class>
- <widget class="QMainWindow" name="MenuWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>350</width>
-    <height>340</height>
-   </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>350</width>
-    <height>320</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>700</width>
-    <height>640</height>
-   </size>
-  </property>
-  <property name="sizeIncrement">
-   <size>
-    <width>8</width>
-    <height>0</height>
-   </size>
-  </property>
-  <property name="windowTitle">
-   <string>MenuWindow</string>
-  </property>
-  <widget class="QWidget" name="centralwidget">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item alignment="Qt::AlignHCenter">
-       <widget class="QLabel" name="Menu">
-        <property name="styleSheet">
-         <string notr="true">font: 57 14pt &quot;Ubuntu&quot;;</string>
+    <class>MenuWindow</class>
+    <widget class="QMainWindow" name="MenuWindow">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>350</width>
+                <height>340</height>
+            </rect>
         </property>
-        <property name="text">
-         <string>Drink Menu</string>
+        <property name="minimumSize">
+            <size>
+                <width>350</width>
+                <height>320</height>
+            </size>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="Line" name="line">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+        <property name="maximumSize">
+            <size>
+                <width>700</width>
+                <height>640</height>
+            </size>
         </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="1" column="0">
-     <layout class="QVBoxLayout" name="drinkOptions" stretch="1,1,1,1,1,1,1">
-      <property name="spacing">
-       <number>15</number>
-      </property>
-      <property name="sizeConstraint">
-       <enum>QLayout::SetMaximumSize</enum>
-      </property>
-      <property name="leftMargin">
-       <number>10</number>
-      </property>
-      <property name="topMargin">
-       <number>5</number>
-      </property>
-      <property name="rightMargin">
-       <number>10</number>
-      </property>
-      <property name="bottomMargin">
-       <number>5</number>
-      </property>
-      <item>
-       <widget class="QPushButton" name="ginTonic">
-        <property name="text">
-         <string>Gin Tonic</string>
+        <property name="sizeIncrement">
+            <size>
+                <width>8</width>
+                <height>0</height>
+            </size>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="vodkaLemonade">
-        <property name="text">
-         <string>Vodka Lemonade</string>
+        <property name="windowTitle">
+            <string>MenuWindow</string>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="vodkaMartini">
-        <property name="text">
-         <string>Vodka Martini</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="ginMartini">
-        <property name="text">
-         <string>Gin Martini</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="negroni">
-        <property name="text">
-         <string>Negroni</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>10</width>
-          <height>10</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="surpriseMe">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(245, 121, 0);
+        <widget class="QWidget" name="centralwidget">
+            <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_3">
+                <item row="0" column="0">
+                    <layout class="QVBoxLayout" name="verticalLayout">
+                        <item alignment="Qt::AlignHCenter">
+                            <widget class="QLabel" name="Menu">
+                                <property name="styleSheet">
+                                    <string notr="true">font: 57 14pt &quot;Ubuntu&quot;;</string>
+                                </property>
+                                <property name="text">
+                                    <string>Drink Menu</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item>
+                            <widget class="Line" name="line">
+                                <property name="orientation">
+                                    <enum>Qt::Horizontal</enum>
+                                </property>
+                            </widget>
+                        </item>
+                    </layout>
+                </item>
+                <item row="1" column="0">
+                    <layout class="QVBoxLayout" name="drinkOptions" stretch="1,1,1,1,1,1,1">
+                        <property name="spacing">
+                            <number>15</number>
+                        </property>
+                        <property name="sizeConstraint">
+                            <enum>QLayout::SetMaximumSize</enum>
+                        </property>
+                        <property name="leftMargin">
+                            <number>10</number>
+                        </property>
+                        <property name="topMargin">
+                            <number>5</number>
+                        </property>
+                        <property name="rightMargin">
+                            <number>10</number>
+                        </property>
+                        <property name="bottomMargin">
+                            <number>5</number>
+                        </property>
+                        <item>
+                            <widget class="QPushButton" name="ginTonic">
+                                <property name="text">
+                                    <string>Gin and Tonic</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item>
+                            <widget class="QPushButton" name="vodkaLemonade">
+                                <property name="text">
+                                    <string>Vodka Lemonade</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item>
+                            <widget class="QPushButton" name="vodkaMartini">
+                                <property name="text">
+                                    <string>Vodka Martini</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item>
+                            <widget class="QPushButton" name="ginMartini">
+                                <property name="text">
+                                    <string>Gin Martini</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item>
+                            <widget class="QPushButton" name="negroni">
+                                <property name="text">
+                                    <string>Negroni</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item>
+                            <spacer name="verticalSpacer">
+                                <property name="orientation">
+                                    <enum>Qt::Vertical</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>QSizePolicy::Fixed</enum>
+                                </property>
+                                <property name="sizeHint" stdset="0">
+                                    <size>
+                                        <width>10</width>
+                                        <height>10</height>
+                                    </size>
+                                </property>
+                            </spacer>
+                        </item>
+                        <item>
+                            <widget class="QPushButton" name="surpriseMe">
+                                <property name="styleSheet">
+                                    <string notr="true">background-color: rgb(245, 121, 0);
 font: 57 italic 11pt &quot;Ubuntu&quot;;
 font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Surprise Me!</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="drinkChoice">
-      <property name="text">
-       <string>** Drink Choice **</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
- </widget>
- <resources/>
- <connections/>
+                                </property>
+                                <property name="text">
+                                    <string>Surprise Me!</string>
+                                </property>
+                            </widget>
+                        </item>
+                    </layout>
+                </item>
+                <item row="2" column="0">
+                    <widget class="QLabel" name="drinkChoice">
+                        <property name="text">
+                            <string>** Drink Choice **</string>
+                        </property>
+                    </widget>
+                </item>
+            </layout>
+        </widget>
+    </widget>
+    <resources/>
+    <connections/>
 </ui>

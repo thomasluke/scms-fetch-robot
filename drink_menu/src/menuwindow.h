@@ -3,9 +3,14 @@
 
 #include <QMainWindow>
 #include <random>
+#include "ros/ros.h"
+#include "std_msgs/String.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MenuWindow; }
+namespace Ui
+{
+    class MenuWindow;
+}
 QT_END_NAMESPACE
 
 class MenuWindow : public QMainWindow
@@ -13,8 +18,12 @@ class MenuWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MenuWindow(QWidget *parent = nullptr);
+    // MenuWindow(QWidget *parent = nullptr);
+    MenuWindow(ros::NodeHandle n, QWidget *parent = nullptr);
     ~MenuWindow();
+
+    void lockButtons();
+    void unlockButtons();
 
 private slots:
     void on_ginTonic_clicked();
@@ -31,7 +40,10 @@ private slots:
 
 private:
     Ui::MenuWindow *ui;
-    std::default_random_engine  *nd_generator;
+    std::default_random_engine *nd_generator;
     std::uniform_int_distribution<> *random_drink;
+    ros::Publisher drink_pub;
+
+    void publishDrink(std::string drink);
 };
 #endif // MENUWINDOW_H
