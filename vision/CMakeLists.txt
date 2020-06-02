@@ -12,9 +12,10 @@ find_package( catkin REQUIRED COMPONENTS
     std_msgs
     cv_bridge
     image_transport
+    message_generation
   )
 
-  catkin_package(
+catkin_package(
   LIBRARIES
   INCLUDE_DIRS
   CATKIN_DEPENDS
@@ -28,12 +29,12 @@ include_directories(${THIS_PACKAGE_INCLUDE_DIRS}
     ${Boost_INCLUDE_DIR}
   )
   
- add_executable(vision src/vision.cpp)
+add_executable(vision src/vision.cpp)
 
   
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
 target_link_libraries(vision ${OpenCV_LIBRARIES} ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
-
+add_dependencies(vision ${catkin_EXPORTED_TARGETS})
 
 install(TARGETS vision DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
