@@ -1,8 +1,7 @@
 <?xml version='1.0'?>
 <sdf version="1.5">
-    <model name='Vodka'>
-        <static>false</static>
-        <link name="body">
+    <model name='vodka'>
+        <link name="link">
             <inertial>
                 <mass>0.890</mass>
                 <inertia>
