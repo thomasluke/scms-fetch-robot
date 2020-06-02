@@ -5,6 +5,8 @@
 #include <random>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "drink_menu/drink.h"
+#include <vector>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -44,6 +46,6 @@ private:
     std::uniform_int_distribution<> *random_drink;
     ros::Publisher drink_pub;
 
-    void publishDrink(std::string drink);
+    void publishDrink(std::string drink, std::vector<std::string> ingredients);
 };
 #endif // MENUWINDOW_H

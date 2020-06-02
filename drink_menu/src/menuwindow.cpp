@@ -22,7 +22,7 @@ MenuWindow::MenuWindow(ros::NodeHandle n, QWidget *parent) : QMainWindow(parent)
 
     ui->setupUi(this);
 
-    drink_pub = n.advertise<std_msgs::String>("drink_selection", 1000);
+    drink_pub = n.advertise<drink_menu::drink>("drink_selection", 1000);
 }
 
 MenuWindow::~MenuWindow()
@@ -53,31 +53,31 @@ void MenuWindow::unlockButtons()
 void MenuWindow::on_ginTonic_clicked()
 {
     ui->drinkChoice->setText("Gin and Tonic");
-    publishDrink("Gin and Tonic");
+    publishDrink("Gin and Tonic", std::vector<std::string>{"gin"});
 }
 
 void MenuWindow::on_vodkaLemonade_clicked()
 {
     ui->drinkChoice->setText("Vodka Lemonade");
-    publishDrink("Vodka Lemonade");
+    publishDrink("Vodka Lemonade", std::vector<std::string>{"vodka"});
 }
 
 void MenuWindow::on_vodkaMartini_clicked()
 {
     ui->drinkChoice->setText("Vodka Martini");
-    publishDrink("Vodka Martini");
+    publishDrink("Vodka Martini", std::vector<std::string>{"vodka", "vermouth"});
 }
 
 void MenuWindow::on_ginMartini_clicked()
 {
     ui->drinkChoice->setText("Gin Martini");
-    publishDrink("Gin Martini");
+    publishDrink("Gin Martini", std::vector<std::string>{"gin", "vermouth"});
 }
 
 void MenuWindow::on_negroni_clicked()
 {
     ui->drinkChoice->setText("Negroni");
-    publishDrink("Negroni");
+    publishDrink("Negroni", std::vector<std::string>{"gin", "vermouth", "campari"});
 }
 
 void MenuWindow::on_surpriseMe_clicked()
@@ -104,14 +104,15 @@ void MenuWindow::on_surpriseMe_clicked()
     }
 }
 
-void MenuWindow::publishDrink(std::string drink)
+void MenuWindow::publishDrink(std::string drink, std::vector<std::string> ingredients)
 {
     if (ros::ok())
     {
-        std_msgs::String msg;
-        msg.data = drink;
+        drink_menu::drink msg;
+        msg.drink = drink;
+        msg.ingredients = ingredients;
 
-        ROS_INFO("%s", msg.data.c_str());
+        ROS_INFO("%s", msg.drink.c_str());
         drink_pub.publish(msg);
         ros::spinOnce();
     }

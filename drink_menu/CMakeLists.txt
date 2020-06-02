@@ -5,7 +5,7 @@ project(drink_menu LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg)
+find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg message_generation)
 
 
 ###
@@ -49,8 +49,23 @@ file(GLOB QT_SRCS
     "src/*.hpp"
 )
 
+add_message_files(
+    DIRECTORY msg
+FILES
+    drink.msg
+)
+
+## Generate added messages and services with any dependencies listed here
+generate_messages(
+    DEPENDENCIES
+    std_msgs
+)
+
 ## Declare a catkin package
-catkin_package()
+catkin_package(
+    CATKIN_DEPENDS message_runtime roscpp std_msgs
+)
+
 
 # target_link_libraries(drink_menu Qt5::Widgets Qt5::Core)
 
