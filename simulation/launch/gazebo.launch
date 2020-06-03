@@ -21,7 +21,7 @@
     <!-- Oh, you wanted a robot? -->
     <include file="$(find fetch_gazebo)/launch/include/$(arg robot).launch.xml">
         <arg name="x" value="-1.5" />
-        <arg name="y" value="0.7" />
+        <arg name="y" value="0.5" />
         <!-- <arg name="yaw" value="2" /> -->
         <arg name="yaw" value="1.5708" />
     </include>
