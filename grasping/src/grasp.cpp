@@ -41,7 +41,7 @@ void Grasp::pick(moveit::planning_interface::MoveGroupInterface &move_group, geo
     tf2::Quaternion orientation;
     orientation.setRPY(0, 0, 0);
     grasps[0].grasp_pose.pose.orientation = tf2::toMsg(orientation);
-    grasps[0].grasp_pose.pose.position = pose;
+    grasps[0].grasp_pose.pose.position = pose.position;
 
     /* Defined with respect to frame_id */
     grasps[0].pre_grasp_approach.direction.header.frame_id = FRAME_ID;
