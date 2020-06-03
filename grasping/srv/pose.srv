@@ -1,0 +1,6 @@
+#request
+geometry_msgs/Pose current
+geometry_msgs/Pose target
+---
+#response
+bool success
