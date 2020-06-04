@@ -3,8 +3,8 @@
 
 Integration::Integration(ros::NodeHandle nh) : nh_(nh)
 {
-    ros::Subscriber sub_ = nh.subscribe("vision", 1000, &Integration::visionCallback, this);
-    ros::ServiceClient client_ = nh.serviceClient<grasping::pose>("grasping_service");
+    sub_ = nh_.subscribe("vision", 1000, &Integration::visionCallback, this);
+    client_ = nh_.serviceClient<grasping::pose>("grasping_service");
 }
 Integration::~Integration() {}
 
@@ -17,7 +17,7 @@ void Integration::setBottleOffset(const geometry_msgs::Point &offset)
     bottleOffset_ = offset;
 }
 
-void Integration::visionCallback(const geometry_msgs::PoseArray::ConstPtr &msg)
+void Integration::visionCallback(const geometry_msgs::PoseArrayConstPtr &msg)
 {
     std::vector<geometry_msgs::Pose> bottles = msg->poses;
     std::deque<std::pair<geometry_msgs::Pose, geometry_msgs::Pose>> moved_bottles;
@@ -31,6 +31,8 @@ void Integration::visionCallback(const geometry_msgs::PoseArray::ConstPtr &msg)
         move.request.current = bottle;
         move.request.target = surface_;
         addPoints(move.request.target.position, offset);
+
+        ROS_INFO_STREAM("Bottle: (" << bottle.position.x << ", " << bottle.position.y << ", " << bottle.position.z << ")");
 
         if (client_.call(move))
         {
@@ -60,7 +62,6 @@ void Integration::visionCallback(const geometry_msgs::PoseArray::ConstPtr &msg)
         }
     }
 }
-
 void Integration::addPoints(geometry_msgs::Point &pt1, const geometry_msgs::Point &pt2)
 {
     pt1.x += pt2.x;

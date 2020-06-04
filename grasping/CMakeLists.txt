@@ -70,8 +70,11 @@ include_directories(${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_
 # add_subdirectory(move_group_interface)
 
 add_executable(grasping src/main.cpp src/grasp.cpp)
+add_executable(grasping_service src/service.cpp src/grasp.cpp)
 target_link_libraries(grasping ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(grasping_service ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 install(TARGETS grasping DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+install(TARGETS grasping_service DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 # # install(
 # #   PROGRAMS

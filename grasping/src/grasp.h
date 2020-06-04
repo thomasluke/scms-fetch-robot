@@ -1,3 +1,6 @@
+#ifndef GRASP_H
+#define GRASP_H
+
 #include <ros/ros.h>
 
 #include <moveit/move_group_interface/move_group_interface.h>
@@ -24,3 +27,5 @@ public:
     void openGripper(trajectory_msgs::JointTrajectory &posture);
     void closeGripper(trajectory_msgs::JointTrajectory &posture);
 };
+
+#endif // GRASP_H
