@@ -13,6 +13,7 @@ find_package( catkin REQUIRED COMPONENTS
     cv_bridge
     image_transport
     message_generation
+    drink_menu
   )
 
 catkin_package(
