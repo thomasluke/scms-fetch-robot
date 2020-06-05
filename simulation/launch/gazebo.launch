@@ -1,5 +1,4 @@
 <launch>
-
     <!-- Launch Gazebo with robot -->
     <env name="GAZEBO_MODEL_PATH" value="$(find fetch_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)" />
 
