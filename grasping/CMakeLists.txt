@@ -70,7 +70,7 @@ include_directories(include ${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} 
 
 # add_subdirectory(move_group_interface)
 
-add_executable(grasping src/main.cpp)
+add_executable(grasping src/main_WIP.cpp)
 target_link_libraries(grasping ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 add_dependencies(grasping ${catkin_EXPORTED_TARGETS})
 install(TARGETS grasping DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

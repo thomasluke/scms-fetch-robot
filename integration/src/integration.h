@@ -29,7 +29,7 @@ private:
     ros::ServiceClient client_;
 
     geometry_msgs::Pose surface_;
-    geometry_msgs::Point bottleOffset_;
+    geometry_msgs::Point bottle_offset_;
 };
 
 #endif //INTEGRATION_H

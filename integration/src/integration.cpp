@@ -14,7 +14,7 @@ void Integration::setSurface(const geometry_msgs::Pose &surface)
 }
 void Integration::setBottleOffset(const geometry_msgs::Point &offset)
 {
-    bottleOffset_ = offset;
+    bottle_offset_ = offset;
 }
 
 void Integration::visionCallback(const geometry_msgs::PoseArrayConstPtr &msg)
@@ -46,7 +46,7 @@ void Integration::visionCallback(const geometry_msgs::PoseArrayConstPtr &msg)
         }
 
         //shift offset
-        addPoints(offset, bottleOffset_);
+        addPoints(offset, bottle_offset_);
     }
 
     for (auto bottle : moved_bottles)

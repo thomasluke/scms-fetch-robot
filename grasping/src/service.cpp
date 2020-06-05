@@ -2,6 +2,7 @@
 #include "std_msgs/String.h"
 #include "grasping/move.h"
 #include "grasp.h"
+#include <string>
 
 bool graspingCallback(grasping::move::Request &req, grasping::move::Response &res)
 {
@@ -28,6 +29,16 @@ int main(int argc, char *argv[])
 
     ros::ServiceServer service = n.advertiseService("grasping_service", graspingCallback);
 
+    Grasp grasp(n, "arm_with_torso");
+
+    geometry_msgs::Point offset;
+    offset.x = -0.2;
+    offset.y = 0;
+    offset.z = 0;
+    grasp.setGripperOffset(offset);
+
+    // grasp.setupScene();
+
     ros::spin();
-    ros::shutdown();
+    ros::requestShutdown();
 }

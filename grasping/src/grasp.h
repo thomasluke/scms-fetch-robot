@@ -16,16 +16,36 @@
 
 // TF2
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <geometry_msgs/Point.h>
+#include <geometry_msgs/Pose.h>
+#include <geometry_msgs/PoseArray.h>
+#include <string>
 
 class Grasp
 {
 public:
     static const std::string FRAME_ID;
 
-    void pick(moveit::planning_interface::MoveGroupInterface &move_group, geometry_msgs::Pose pose);
+    Grasp(ros::NodeHandle &nh, std::string move_group);
 
+    void pick(moveit::planning_interface::MoveGroupInterface &move_group, const std::string &name, const geometry_msgs::Pose &object);
+    void place(moveit::planning_interface::MoveGroupInterface &move_group, const std::string &name, const geometry_msgs::Pose &object);
+
+    void setGripperOffset(const geometry_msgs::Point &offset);
+    void setupScene(moveit::planning_interface::PlanningSceneInterface &planning_scene_interface);
+
+private:
     void openGripper(trajectory_msgs::JointTrajectory &posture);
     void closeGripper(trajectory_msgs::JointTrajectory &posture);
+    void addPoints(geometry_msgs::Point &pt1, const geometry_msgs::Point &pt2);
+
+public:
+    ros::NodeHandle nh_;
+    moveit::planning_interface::MoveGroupInterface move_group_;
+    moveit::planning_interface::PlanningSceneInterface planning_scene_;
+
+private:
+    geometry_msgs::Point gripper_offset_;
 };
 
 #endif // GRASP_H
