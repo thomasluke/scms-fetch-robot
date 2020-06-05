@@ -14,6 +14,11 @@ find_package( catkin REQUIRED COMPONENTS
     image_transport
     message_generation
     drink_menu
+    tf
+    tf2_eigen
+    resource_retriever
+   
+
   )
 
 catkin_package(
@@ -22,6 +27,11 @@ catkin_package(
   CATKIN_DEPENDS
     cv_bridge
     image_transport
+    AlvarMarkers
+    roscpp
+    sensor_msgs
+    std_msgs
+    tf
   
 )
 
@@ -30,6 +40,9 @@ include_directories(${THIS_PACKAGE_INCLUDE_DIRS}
     ${Boost_INCLUDE_DIR}
 )
   
+find_package(AlvarMarkers)
+include_directories(${AlvarMarkers_INCLUDE_DIRS})
+
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
