@@ -3,6 +3,7 @@
 #include "grasping/move.h"
 #include "grasp.h"
 #include <string>
+#include <thread>
 
 bool graspingCallback(grasping::move::Request &req, grasping::move::Response &res)
 {
@@ -26,21 +27,46 @@ int main(int argc, char *argv[])
      * NodeHandle destructed will close down the node.
      */
     ros::NodeHandle n;
+    ros::AsyncSpinner spinner(1);
+    spinner.start();
 
-    ros::ServiceServer service = n.advertiseService("grasping_service", graspingCallback);
+    std::shared_ptr<Grasp> grasp(new Grasp(n, "arm_with_torso"));
+    std::thread t(&Grasp::seperateThread, grasp);
 
-    Grasp grasp(n, "arm_with_torso");
+    // Grasp grasp(n, "arm_with_torso");
 
-    geometry_msgs::Point offset;
-    offset.x = -0.2;
-    offset.y = 0;
-    offset.z = 0;
-    grasp.setGripperOffset(offset);
+    geometry_msgs::Point gripper_offset;
+    gripper_offset.x = -0.2;
+    gripper_offset.y = 0;
+    gripper_offset.z = 0;
+    grasp->setGripperOffset(gripper_offset);
 
-    grasp.setupScene();
+    geometry_msgs::Point fetch_offset;
+    fetch_offset.x = -(0.6);
+    fetch_offset.y = -(1.5);
+    fetch_offset.z = -(0.0);
+    grasp->setFetchOffset(fetch_offset);
 
-    
+    grasp->setupScene();
 
-    ros::spin();
-    ros::requestShutdown();
+    geometry_msgs::Pose current;
+    current.position.x = 0.5;
+    current.position.y = 0.3;
+    current.position.z = 0.8;
+    geometry_msgs::Pose target;
+    target.position.x = 0.4;
+    target.position.y = -0.4;
+    target.position.z = 0.5;
+
+    grasping::move move;
+    move.request.current = current;
+    move.request.target = target;
+
+    // grasp->graspingCallback(move.request, move.response);
+
+    // ros::spin();
+    ros::waitForShutdown();
+    t.join();
+
+    return 0;
 }

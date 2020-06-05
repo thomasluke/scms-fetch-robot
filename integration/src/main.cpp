@@ -28,8 +28,8 @@ int main(int argc, char **argv)
     integration->setBottleOffset(offset);
 
     geometry_msgs::Pose surface;
-    surface.position.x = -4.0;
-    surface.position.y = 1.2;
+    surface.position.x = 0.6;
+    surface.position.y = 0.4;
     surface.position.z = 0.8;
     integration->setSurface(surface);
 
