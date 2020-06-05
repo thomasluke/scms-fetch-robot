@@ -2,6 +2,8 @@
 #define GRASP_H
 
 #include <ros/ros.h>
+#include "std_msgs/String.h"
+#include "grasping/move.h"
 
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
@@ -32,8 +34,12 @@ public:
     void place(const std::string &name, const geometry_msgs::Pose &object);
 
     void setGripperOffset(const geometry_msgs::Point &offset);
+    void setFetchOffset(const geometry_msgs::Point &offset);
     void setupScene();
     void moveBottle(geometry_msgs::Pose current, geometry_msgs::Pose target);
+
+    bool graspingCallback(grasping::move::Request &req, grasping::move::Response &res);
+    void seperateThread();
 
 private:
     void openGripper(trajectory_msgs::JointTrajectory &posture);
@@ -44,11 +50,15 @@ private:
 
 public:
     ros::NodeHandle nh_;
+    ros::AsyncSpinner spinner_;
+
     moveit::planning_interface::MoveGroupInterface move_group_;
     moveit::planning_interface::PlanningSceneInterface planning_scene_;
 
 private:
     geometry_msgs::Point gripper_offset_;
+    geometry_msgs::Point fetch_offset_;
+    ros::ServiceServer service_;
 };
 
 #endif // GRASP_H
