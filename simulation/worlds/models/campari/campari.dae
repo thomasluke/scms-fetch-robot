@@ -499,7 +499,7 @@
             <init_from>campari/Aluminum.jpg</init_from>
         </image>
         <image id="ID57">
-            <init_from>campari/texture.png</init_from>
+            <init_from>campari/MarkerData_0_25.png</init_from>
         </image>
         <image id="ID71">
             <init_from>campari/texture_0.png</init_from>

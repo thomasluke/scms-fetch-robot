@@ -499,7 +499,7 @@
             <init_from>vermouth/Aluminum.jpg</init_from>
         </image>
         <image id="ID57">
-            <init_from>vermouth/texture.png</init_from>
+            <init_from>vermouth/MarkerData_0_1.png</init_from>
         </image>
         <image id="ID71">
             <init_from>vermouth/texture_0.png</init_from>

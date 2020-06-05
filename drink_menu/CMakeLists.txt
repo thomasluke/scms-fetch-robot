@@ -66,15 +66,6 @@ catkin_package(
     CATKIN_DEPENDS message_runtime roscpp std_msgs
 )
 
-
-# target_link_libraries(drink_menu Qt5::Widgets Qt5::Core)
-
-
-# target_link_libraries(drink_menu ${catkin_LIBRARIES})
-
-
-# target_link_libraries(drink_menu Qt5::Widgets Qt5::Core)
-
 add_executable(drink_menu
     ${MB_UI_HDRS} ${QT_SRCS} ${SRCS} ${RESOURCE}
 )

@@ -1926,7 +1926,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='Gin'>
+      <model name='gin'>
         <pose frame=''>-1.4 1.5 1.1 0 -0 -3.14119</pose>
         <scale>1 1 1</scale>
         <link name='body'>
@@ -1936,7 +1936,7 @@
           <wrench>-0 -0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='Vermouth'>
+      <model name='vermouth'>
         <pose frame=''>-1.8 1.5 1.1 0 -0 -3.14119</pose>
         <scale>1 1 1</scale>
         <link name='body'>
@@ -1946,7 +1946,7 @@
           <wrench>0 0 -0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='Vodka'>
+      <model name='campari'>
         <pose frame=''>-1.6 1.5 1.1 0 -0 -3.14119</pose>
         <scale>1 1 1</scale>
         <link name='body'>
@@ -1956,7 +1956,7 @@
           <wrench>0 0 -0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='Vodka_0'>
+      <model name='vodka'>
         <pose frame=''>-1.2 1.5 1.1 0 0 -3.14159</pose>
         <scale>1 1 1</scale>
         <link name='body'>
@@ -2434,7 +2434,7 @@
         <projection_type>perspective</projection_type>
       </camera>
     </gui>
-    <model name='Vodka'>
+    <model name='campari'>
       <static>0</static>
       <link name='body'>
         <inertial>
@@ -2482,7 +2482,7 @@
       </link>
       <pose frame=''>-1.00002 -0.852279 0 0 -0 0</pose>
     </model>
-    <model name='Gin'>
+    <model name='gin'>
       <static>0</static>
       <link name='body'>
         <inertial>
@@ -2530,7 +2530,7 @@
       </link>
       <pose frame=''>-0.881581 -0.852914 0 0 -0 0</pose>
     </model>
-    <model name='Vermouth'>
+    <model name='vermouth'>
       <static>0</static>
       <link name='body'>
         <inertial>
@@ -2578,7 +2578,7 @@
       </link>
       <pose frame=''>-0.779877 -0.835175 0 0 -0 0</pose>
     </model>
-    <model name='Vodka_0'>
+    <model name='vodka'>
       <static>0</static>
       <link name='body'>
         <inertial>
