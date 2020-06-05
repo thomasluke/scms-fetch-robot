@@ -28,16 +28,19 @@ public:
 
     Grasp(ros::NodeHandle &nh, std::string move_group);
 
-    void pick(moveit::planning_interface::MoveGroupInterface &move_group, const std::string &name, const geometry_msgs::Pose &object);
-    void place(moveit::planning_interface::MoveGroupInterface &move_group, const std::string &name, const geometry_msgs::Pose &object);
+    void pick(const std::string &name, const geometry_msgs::Pose &object);
+    void place(const std::string &name, const geometry_msgs::Pose &object);
 
     void setGripperOffset(const geometry_msgs::Point &offset);
-    void setupScene(moveit::planning_interface::PlanningSceneInterface &planning_scene_interface);
+    void setupScene();
+    void moveBottle(geometry_msgs::Pose current, geometry_msgs::Pose target);
 
 private:
     void openGripper(trajectory_msgs::JointTrajectory &posture);
     void closeGripper(trajectory_msgs::JointTrajectory &posture);
     void addPoints(geometry_msgs::Point &pt1, const geometry_msgs::Point &pt2);
+    void addBottleObject(const std::string &name, const geometry_msgs::Pose &bottle);
+    void removeBottleObject(const std::string &name);
 
 public:
     ros::NodeHandle nh_;

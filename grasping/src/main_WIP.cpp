@@ -60,9 +60,8 @@
 
 #include <string>
 
-std::string frame_id = "base_link"; //"base_link";
+std::string frame_id = "base_link";   //"base_link";
 std::string frame_id_2 = "base_link"; //"base_link";
-
 
 void openGripper(trajectory_msgs::JointTrajectory &posture)
 {
@@ -116,7 +115,7 @@ void pick(moveit::planning_interface::MoveGroupInterface &move_group)
     tf2::Quaternion orientation;
     orientation.setRPY(0, 0, 0);
     grasps[0].grasp_pose.pose.orientation = tf2::toMsg(orientation);
-    grasps[0].grasp_pose.pose.position.x = 0.8;
+    grasps[0].grasp_pose.pose.position.x = 0.3;
     grasps[0].grasp_pose.pose.position.y = 0;
     grasps[0].grasp_pose.pose.position.z = 0.5;
 
@@ -217,74 +216,74 @@ void addCollisionObjects(moveit::planning_interface::PlanningSceneInterface &pla
     // ^^^^^^^^^^^^^^^^^^^^
     // Create vector to hold 3 collision objects.
     std::vector<moveit_msgs::CollisionObject> collision_objects;
-    collision_objects.resize(1);
+    collision_objects.resize(3);
 
-    // // Add the first table where the cube will originally be kept.
-    // collision_objects[0].id = "table1";
-    // collision_objects[0].header.frame_id = "base_link";
+    // Add the first table where the cube will originally be kept.
+    collision_objects[0].id = "table1";
+    collision_objects[0].header.frame_id = "base_link";
 
-    // /* Define the primitive and its dimensions. */
-    // collision_objects[0].primitives.resize(1);
-    // collision_objects[0].primitives[0].type = collision_objects[0].primitives[0].BOX;
-    // collision_objects[0].primitives[0].dimensions.resize(3);
-    // collision_objects[0].primitives[0].dimensions[0] = 0.2;
-    // collision_objects[0].primitives[0].dimensions[1] = 0.4;
-    // collision_objects[0].primitives[0].dimensions[2] = 0.1;
-
-    // /* Define the pose of the table. */
-    // collision_objects[0].primitive_poses.resize(1);
-    // collision_objects[0].primitive_poses[0].position.x = 0.8;
-    // collision_objects[0].primitive_poses[0].position.y = 0;
-    // collision_objects[0].primitive_poses[0].position.z = 0.95;
-    // collision_objects[0].primitive_poses[0].orientation.w = 1.0;
-    // // END_SUB_TUTORIAL
-
-    // collision_objects[0].operation = collision_objects[0].ADD;
-
-    // // BEGIN_SUB_TUTORIAL table2
-    // // Add the second table where we will be placing the cube.
-    // collision_objects[1].id = "table2";
-    // collision_objects[1].header.frame_id = "base_link";
-
-    // /* Define the primitive and its dimensions. */
-    // collision_objects[1].primitives.resize(1);
-    // collision_objects[1].primitives[0].type = collision_objects[1].primitives[0].BOX;
-    // collision_objects[1].primitives[0].dimensions.resize(3);
-    // collision_objects[1].primitives[0].dimensions[0] = 0.4;
-    // collision_objects[1].primitives[0].dimensions[1] = 0.2;
-    // collision_objects[1].primitives[0].dimensions[2] = 0.4;
-
-    // /* Define the pose of the table. */
-    // collision_objects[1].primitive_poses.resize(1);
-    // collision_objects[1].primitive_poses[0].position.x = 0.3;
-    // collision_objects[1].primitive_poses[0].position.y = 0.5;
-    // collision_objects[1].primitive_poses[0].position.z = 0.8;
-    // collision_objects[1].primitive_poses[0].orientation.w = 1.0;
-    // // END_SUB_TUTORIAL
-
-    // collision_objects[1].operation = collision_objects[1].ADD;
-
-    // BEGIN_SUB_TUTORIAL object
-    // Define the object that we will be manipulating
-    collision_objects[0].header.frame_id = frame_id_2;
-    collision_objects[0].id = "object";
     /* Define the primitive and its dimensions. */
     collision_objects[0].primitives.resize(1);
-    collision_objects[0].primitives[0].type = collision_objects[1].primitives[0].BOX;
+    collision_objects[0].primitives[0].type = collision_objects[0].primitives[0].BOX;
     collision_objects[0].primitives[0].dimensions.resize(3);
-    collision_objects[0].primitives[0].dimensions[0] = 0.02;
-    collision_objects[0].primitives[0].dimensions[1] = 0.02;
-    collision_objects[0].primitives[0].dimensions[2] = 0.2;
+    collision_objects[0].primitives[0].dimensions[0] = 0.2;
+    collision_objects[0].primitives[0].dimensions[1] = 0.4;
+    collision_objects[0].primitives[0].dimensions[2] = 0.4;
 
-    /* Define the pose of the object. */
+    /* Define the pose of the table. */
     collision_objects[0].primitive_poses.resize(1);
-    collision_objects[0].primitive_poses[0].position.x = 0.8;
+    collision_objects[0].primitive_poses[0].position.x = 0.5;
     collision_objects[0].primitive_poses[0].position.y = 0;
-    collision_objects[0].primitive_poses[0].position.z = 0.5;
+    collision_objects[0].primitive_poses[0].position.z = 0.2;
     collision_objects[0].primitive_poses[0].orientation.w = 1.0;
     // END_SUB_TUTORIAL
 
     collision_objects[0].operation = collision_objects[0].ADD;
+
+    // BEGIN_SUB_TUTORIAL table2
+    // Add the second table where we will be placing the cube.
+    collision_objects[1].id = "table2";
+    collision_objects[1].header.frame_id = "base_link";
+
+    /* Define the primitive and its dimensions. */
+    collision_objects[1].primitives.resize(1);
+    collision_objects[1].primitives[0].type = collision_objects[1].primitives[0].BOX;
+    collision_objects[1].primitives[0].dimensions.resize(3);
+    collision_objects[1].primitives[0].dimensions[0] = 0.4;
+    collision_objects[1].primitives[0].dimensions[1] = 0.2;
+    collision_objects[1].primitives[0].dimensions[2] = 0.4;
+
+    /* Define the pose of the table. */
+    collision_objects[1].primitive_poses.resize(1);
+    collision_objects[1].primitive_poses[0].position.x = 0.0;
+    collision_objects[1].primitive_poses[0].position.y = 0.5;
+    collision_objects[1].primitive_poses[0].position.z = 0.2;
+    collision_objects[1].primitive_poses[0].orientation.w = 1.0;
+    // END_SUB_TUTORIAL
+
+    collision_objects[1].operation = collision_objects[1].ADD;
+
+    // BEGIN_SUB_TUTORIAL object
+    // Define the object that we will be manipulating
+    collision_objects[2].header.frame_id = "base_link";
+    collision_objects[2].id = "object";
+    /* Define the primitive and its dimensions. */
+    collision_objects[2].primitives.resize(1);
+    collision_objects[2].primitives[0].type = collision_objects[1].primitives[0].BOX;
+    collision_objects[2].primitives[0].dimensions.resize(3);
+    collision_objects[2].primitives[0].dimensions[0] = 0.02;
+    collision_objects[2].primitives[0].dimensions[1] = 0.02;
+    collision_objects[2].primitives[0].dimensions[2] = 0.2;
+
+    /* Define the pose of the object. */
+    collision_objects[2].primitive_poses.resize(1);
+    collision_objects[2].primitive_poses[0].position.x = 0.5;
+    collision_objects[2].primitive_poses[0].position.y = 0;
+    collision_objects[2].primitive_poses[0].position.z = 0.5;
+    collision_objects[2].primitive_poses[0].orientation.w = 1.0;
+    // END_SUB_TUTORIAL
+
+    collision_objects[2].operation = collision_objects[2].ADD;
 
     planning_scene_interface.applyCollisionObjects(collision_objects);
 }
@@ -297,21 +296,6 @@ int main(int argc, char **argv)
     spinner.start();
 
     ros::WallDuration(2.0).sleep(); //< Uses system time to delay for 1.0 second.
-
-    // Define the attached object message
-    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    // We will use this message to add or
-    // subtract the object from the world
-    // and to attach the object to the robot.
-    moveit_msgs::AttachedCollisionObject attached_object;
-
-    // Note that attaching an object to the robot requires
-    // the corresponding operation to be specified as an ADD operation.
-    attached_object.object.operation = attached_object.object.ADD;
-
-    // Since we are attaching the object to the robot hand to simulate picking up the object,
-    // we want the collision checker to ignore collisions between the object and the robot hand.
-    attached_object.touch_links = std::vector<std::string>{"gripper", "r_gripper_finger_joint", "l_gripper_finger_joint","arm_with_torso"};
 
     moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
     moveit::planning_interface::MoveGroupInterface arm("arm_with_torso");
@@ -333,7 +317,7 @@ int main(int argc, char **argv)
 
     // place(arm);
 
-    ros::shutdown();
+    ros::waitForShutdown();
 
     return 0;
 }

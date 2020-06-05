@@ -33,9 +33,7 @@ void Grasp::closeGripper(trajectory_msgs::JointTrajectory &posture)
     posture.points[0].time_from_start = ros::Duration(0.5);
 }
 
-void Grasp::pick(moveit::planning_interface::MoveGroupInterface &move_group,
-                 const std::string &name,
-                 const geometry_msgs::Pose &object)
+void Grasp::pick(const std::string &name, const geometry_msgs::Pose &object)
 {
     // Create a vector of grasps to be attempted, currently only creating single grasp.
     // This is essentially useful when using a grasp generator to generate and test multiple grasps.
@@ -69,12 +67,10 @@ void Grasp::pick(moveit::planning_interface::MoveGroupInterface &move_group,
     closeGripper(grasps[0].grasp_posture);
 
     // Call pick to pick up the object using the grasps given
-    move_group.pick(name, grasps);
+    move_group_.pick(name, grasps);
 }
 
-void Grasp::place(moveit::planning_interface::MoveGroupInterface &move_group,
-                  const std::string &name,
-                  const geometry_msgs::Pose &object)
+void Grasp::place(const std::string &name, const geometry_msgs::Pose &object)
 {
     std::vector<moveit_msgs::PlaceLocation> place_location;
     place_location.resize(1);
@@ -101,12 +97,10 @@ void Grasp::place(moveit::planning_interface::MoveGroupInterface &move_group,
     // Set support surface as table2.
     //move_group.setSupportSurfaceName("table2");
     // Call place to place the object using the place locations given.
-    move_group.place(name, place_location);
+    move_group_.place(name, place_location);
 }
 
-void addBottleObject(moveit::planning_interface::PlanningSceneInterface &planning_scene_interface,
-                     const std::string &name,
-                     const geometry_msgs::Pose &bottle)
+void Grasp::addBottleObject(const std::string &name, const geometry_msgs::Pose &bottle)
 {
     moveit_msgs::CollisionObject collision_object;
 
@@ -126,10 +120,16 @@ void addBottleObject(moveit::planning_interface::PlanningSceneInterface &plannin
     collision_object.primitive_poses[0] = bottle;
     collision_object.operation = collision_object.ADD;
 
-    planning_scene_interface.applyCollisionObject(collision_object);
+    planning_scene_.applyCollisionObject(collision_object);
 }
 
-void Grasp::setupScene(moveit::planning_interface::PlanningSceneInterface &planning_scene_interface)
+void Grasp::removeBottleObject(const std::string &name)
+{
+    std::vector<std::string> object_ids{name};
+    planning_scene_.removeCollisionObjects(object_ids);
+}
+
+void Grasp::setupScene()
 {
     std::vector<moveit_msgs::CollisionObject> collision_objects;
 
@@ -183,11 +183,12 @@ void Grasp::setupScene(moveit::planning_interface::PlanningSceneInterface &plann
         collision_objects.push_back(collision_object);
     }
 
-    planning_scene_interface.applyCollisionObjects(collision_objects);
+    planning_scene_.applyCollisionObjects(collision_objects);
 }
 
-void moveObject(geometry_msgs::Pose current, geometry_msgs::Pose target)
+void Grasp::moveBottle(geometry_msgs::Pose current, geometry_msgs::Pose target)
 {
+    // addBottleObject()
 }
 
 void Grasp::setGripperOffset(const geometry_msgs::Point &offset)

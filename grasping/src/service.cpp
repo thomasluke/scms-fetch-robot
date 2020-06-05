@@ -37,7 +37,9 @@ int main(int argc, char *argv[])
     offset.z = 0;
     grasp.setGripperOffset(offset);
 
-    // grasp.setupScene();
+    grasp.setupScene();
+
+    
 
     ros::spin();
     ros::requestShutdown();
