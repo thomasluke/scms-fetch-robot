@@ -7,12 +7,6 @@ catkin_package()
 include_directories(include ${catkin_INCLUDE_DIRS})
 
 install(
-  PROGRAMS
-    scripts/disco.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-install(
   DIRECTORY launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
