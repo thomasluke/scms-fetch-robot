@@ -4,7 +4,7 @@
 Integration::Integration(ros::NodeHandle nh) : nh_(nh)
 {
     sub_ = nh_.subscribe("vision_poses", 1000, &Integration::visionCallback, this);
-    client_ = nh_.serviceClient<grasping::pose>("grasping_service");
+    client_ = nh_.serviceClient<grasping::move>("grasping_service");
 }
 Integration::~Integration() {}
 
@@ -29,7 +29,7 @@ void Integration::visionCallback(const geometry_msgs::PoseArrayConstPtr &msg)
     offset.z = 0;
     for (auto bottle : bottles)
     {
-        grasping::pose move;
+        grasping::move move;
         move.request.current = bottle;
         move.request.target = surface_;
         addPoints(move.request.target.position, offset);
@@ -51,7 +51,7 @@ void Integration::visionCallback(const geometry_msgs::PoseArrayConstPtr &msg)
 
     for (auto bottle : moved_bottles)
     {
-        grasping::pose move;
+        grasping::move move;
         move.request.current = bottle.second;
         move.request.target = bottle.first;
 

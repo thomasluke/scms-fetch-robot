@@ -6,7 +6,7 @@
 #include <vector>
 #include <deque>
 #include "geometry_msgs/PoseArray.h"
-#include "grasping/pose.h"
+#include "grasping/move.h"
 
 class Integration
 {

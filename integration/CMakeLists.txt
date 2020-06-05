@@ -15,32 +15,19 @@ find_package(catkin REQUIRED
         grasping
 )
 
-# file(GLOB SRCS
-#     "src/*.h"
-#     "src/*.cpp"
-#     "src/*.hpp"
-# )
-
-generate_messages(
-    DEPENDENCIES
-    std_msgs
-    geometry_msgs
-    grasping
-)
-
 ## Declare a catkin package
 catkin_package(
     LIBRARIES
     INCLUDE_DIRS
     CATKIN_DEPENDS 
-        message_runtime 
         roscpp 
-        std_msgs 
-        geometry_msgs
-        grasping
 )
 
-include_directories(include ${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
+include_directories(include 
+    ${THIS_PACKAGE_INCLUDE_DIRS} 
+    ${catkin_INCLUDE_DIRS}
+    ${Boost_INCLUDE_DIR}
+)
 
 add_executable(integration
     src/main.cpp
@@ -48,5 +35,6 @@ add_executable(integration
 )
 
 target_link_libraries(integration ${catkin_LIBRARIES})
+add_dependencies(integration ${catkin_EXPORTED_TARGETS})
 
 install(TARGETS integration DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

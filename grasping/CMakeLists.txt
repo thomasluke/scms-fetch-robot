@@ -7,6 +7,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 find_package(catkin REQUIRED
   COMPONENTS
     roscpp
+    rospy
     std_msgs
     geometry_msgs
     genmsg
@@ -34,7 +35,7 @@ find_package(Boost REQUIRED system filesystem date_time thread)
 add_service_files(
     DIRECTORY srv
 FILES
-    pose.srv
+    move.srv
 )
 
 ## Generate added messages and services with any dependencies listed here
@@ -65,15 +66,18 @@ catkin_package(
 # include_directories(include ${catkin_INCLUDE_DIRS})
 
 
-include_directories(${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIRS})
+include_directories(include ${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIRS})
 
 # add_subdirectory(move_group_interface)
 
-add_executable(grasping src/main.cpp src/grasp.cpp)
-add_executable(grasping_service src/service.cpp src/grasp.cpp)
+add_executable(grasping src/main.cpp)
 target_link_libraries(grasping ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-target_link_libraries(grasping_service ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_dependencies(grasping ${catkin_EXPORTED_TARGETS})
 install(TARGETS grasping DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+add_executable(grasping_service src/service.cpp src/grasp.cpp)
+target_link_libraries(grasping_service ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_dependencies(grasping_service ${catkin_EXPORTED_TARGETS})
 install(TARGETS grasping_service DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 # # install(

@@ -71,3 +71,4 @@ add_executable(drink_menu
 )
 
 target_link_libraries(drink_menu Qt5::Widgets Qt5::Core ${catkin_LIBRARIES} )
+add_dependencies(drink_menu drink_menu_generate_messages_cpp)

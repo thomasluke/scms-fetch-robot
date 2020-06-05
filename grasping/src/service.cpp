@@ -1,9 +1,9 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
-#include "grasping/pose.h"
+#include "grasping/move.h"
 #include "grasp.h"
 
-bool graspingCallback(grasping::pose::Request &req, grasping::pose::Response &res)
+bool graspingCallback(grasping::move::Request &req, grasping::move::Response &res)
 {
     auto s_pose = req.current.position;
     auto e_pose = req.target.position;
