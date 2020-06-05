@@ -143,7 +143,7 @@ void pick(moveit::planning_interface::MoveGroupInterface &move_group)
 
     // BEGIN_SUB_TUTORIAL pick3
     // Set support surface as table1.
-    move_group.setSupportSurfaceName("table1");
+    //move_group.setSupportSurfaceName("table1");
     // Call pick to pick up the object using the grasps given
     move_group.pick("object", grasps);
     // END_SUB_TUTORIAL

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package>
+    <!-- %Tag(NAME)% -->
+    <name>integration</name>
+    <!-- %EndTag(NAME)% -->
+    <!-- %Tag(VERSION)% -->
+    <version>0.1.0</version>
+    <!-- %EndTag(VERSION)% -->
+    <!-- %Tag(DESC)% -->
+    <description>Middle man program between vision and grasping</description>
+    <!-- %EndTag(DESC)% -->
+
+    <!-- %Tag(MAINTAINER)% -->
+    <maintainer email="connor.boughton@uts.edu.au">Connor Boughton</maintainer>
+    <!-- %EndTag(MAINTAINER)% -->
+    <!-- %Tag(LICENSE)% -->
+    <license>BSD</license>
+    <!-- %EndTag(LICENSE)% -->
+    <!-- %Tag(AUTHORS)% -->
+    <author email="connor.boughton@uts.edu.au">Connor Boughton</author>
+    <!-- %EndTag(AUTHORS)% -->
+
+    <!-- %Tag(DEPS)% -->
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <build_depend>roscpp</build_depend>
+    <build_depend>std_msgs</build_depend>
+    <build_depend>geometry_msgs</build_depend>
+    <build_depend>message_generation</build_depend>
+    <build_depend>grasping</build_depend>
+
+    <run_depend>grasping</run_depend>
+    <run_depend>message_runtime</run_depend>
+    <run_depend>roscpp</run_depend>
+    <run_depend>std_msgs</run_depend>
+    <run_depend>geometry_msgs</run_depend>
+    <!-- %EndTag(DEPS)% -->
+</package>

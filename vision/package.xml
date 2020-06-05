@@ -50,18 +50,14 @@
   <!--   <doc_depend>doxygen</doc_depend> -->
 
   <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>drink_menu</build_depend>
+
   <build_depend>roscpp</build_depend>
   <build_depend>sensor_msgs</build_depend>
   <build_depend>std_msgs</build_depend>
   <build_depend>cv_bridge</build_depend>
   <build_depend>image_transport</build_depend>
   <build_depend>message_generation</build_depend>
-  <build_depend>visualization_msgs</build_depend>
-  <build_depend>artoolkit</build_depend>
-  <build_depend>tf</build_depend>
-  <build_depend>resource_retriever</build_depend>
-  <build_depend>ar_track_alvar</build_depend>
+  <build_depend>drink_menu</build_depend>
 
   <exec_depend>drink_menu</exec_depend>
   <exec_depend>message_runtime</exec_depend>
@@ -70,16 +66,6 @@
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>cv_bridge</exec_depend>
   <exec_depend>image_transport</exec_depend>
-  <exec_depend>message_generation</exec_depend>
-  <exec_depend>ar_track_alvar</exec_depend>
-
-  <exec_depend>visualization_msgs</exec_depend>
-  <exec_depend>artoolkit</exec_depend>
-  <exec_depend>geometry_msgs</exec_depend>
-  <exec_depend>tf</exec_depend>
-  <exec_depend>resource_retriever</exec_depend>
-
-
 
 
   <!-- The export tag contains other, unspecified, tags -->

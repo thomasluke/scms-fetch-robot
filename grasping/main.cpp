@@ -54,10 +54,6 @@
 
 #include <iostream>
 
-#include <string>
-
-std::string frame_id = "arm";
-
 void openGripper(trajectory_msgs::JointTrajectory &posture)
 {
     // BEGIN_SUB_TUTORIAL open_gripper
@@ -69,8 +65,27 @@ void openGripper(trajectory_msgs::JointTrajectory &posture)
     /* Set them as open, wide enough for the object to fit. */
     posture.points.resize(1);
     posture.points[0].positions.resize(2);
-    posture.points[0].positions[0] = 0.045; // open gripper position (50mm in each direction)
-    posture.points[0].positions[1] = 0.045;
+    posture.points[0].positions[0] = 0.04; // open gripper position
+    posture.points[0].positions[1] = 0.04;
+    posture.points[0].time_from_start = ros::Duration(0.5);
+    // END_SUB_TUTORIAL
+
+    setPoseTargets()
+}
+
+void Gripper(moveit_msgs::MoveGroupGoal & 	goal)
+{
+    // BEGIN_SUB_TUTORIAL open_gripper
+    /* Add both finger joints of panda robot. */
+    posture.joint_names.resize(2);
+    posture.joint_names[0] = "r_gripper_finger_joint";
+    posture.joint_names[1] = "l_gripper_finger_joint";
+
+    /* Set them as open, wide enough for the object to fit. */
+    posture.points.resize(1);
+    posture.points[0].positions.resize(2);
+    posture.points[0].positions[0] = 0.04; // open gripper position
+    posture.points[0].positions[1] = 0.04;
     posture.points[0].time_from_start = ros::Duration(0.5);
     // END_SUB_TUTORIAL
 }
@@ -107,21 +122,18 @@ void pick(moveit::planning_interface::MoveGroupInterface &move_group)
     // of the cube). |br|
     // Therefore, the position for panda_link8 = 5 - (length of cube/2 - distance b/w panda_link8 and palm of eef - some
     // extra padding)
-   
-   // DEFINE POSE OF THE FETCH ROBOT ARM
-   
-    grasps[0].grasp_pose.header.frame_id = frame_id;
+    grasps[0].grasp_pose.header.frame_id = "gripper";
     tf2::Quaternion orientation;
-    orientation.setRPY(0, 0, 0);
+    orientation.setRPY(-M_PI / 2, -M_PI / 4, -M_PI / 2);
     grasps[0].grasp_pose.pose.orientation = tf2::toMsg(orientation);
-    grasps[0].grasp_pose.pose.position.x = 0.65;
+    grasps[0].grasp_pose.pose.position.x = 0.415;
     grasps[0].grasp_pose.pose.position.y = 0;
-    grasps[0].grasp_pose.pose.position.z = 1.2;
+    grasps[0].grasp_pose.pose.position.z = 0.5;
 
     // Setting pre-grasp approach
     // ++++++++++++++++++++++++++
     /* Defined with respect to frame_id */
-    grasps[0].pre_grasp_approach.direction.header.frame_id = frame_id;
+    grasps[0].pre_grasp_approach.direction.header.frame_id = "gripper";
     /* Direction is set as positive x axis */
     grasps[0].pre_grasp_approach.direction.vector.x = 1.0;
     grasps[0].pre_grasp_approach.min_distance = 0.095;
@@ -130,69 +142,40 @@ void pick(moveit::planning_interface::MoveGroupInterface &move_group)
     // Setting post-grasp retreat
     // ++++++++++++++++++++++++++
     /* Defined with respect to frame_id */
-    grasps[0].post_grasp_retreat.direction.header.frame_id = frame_id;
+    grasps[0].post_grasp_retreat.direction.header.frame_id = "gripper";
     /* Direction is set as positive z axis */
-    grasps[0].post_grasp_retreat.direction.vector.x = -0.5;
+    grasps[0].post_grasp_retreat.direction.vector.z = 1.0;
     grasps[0].post_grasp_retreat.min_distance = 0.1;
     grasps[0].post_grasp_retreat.desired_distance = 0.25;
 
     // Setting posture of eef before grasp
     // +++++++++++++++++++++++++++++++++++
-    openGripper(grasps[0].pre_grasp_posture);
+    // openGripper(grasps[0].grasp_posture);
     // // END_SUB_TUTORIAL
     // move_group.move();
 
-    // moveit_msgs::MoveGroupGoal goal.
+    moveit_msgs::MoveGroupGoal goal.
 
     // // BEGIN_SUB_TUTORIAL pick2
     // // Setting posture of eef during grasp
     // // +++++++++++++++++++++++++++++++++++
-    closedGripper(grasps[0].grasp_posture);
-    
-    // BEGIN_SUB_TUTORIAL pick3
-    // Set support surface as table1.
-    //move_group.setSupportSurfaceName("table1");
-    // Call pick to pick up the object using the grasps given
-    move_group.pick("object", grasps);
-    //END_SUB_TUTORIAL
-}
+   openGripper(grasps[0].grasp_posture);
+    // // END_SUB_TUTORIAL
 
-void addCollisionObjects(moveit::planning_interface::PlanningSceneInterface &planning_scene_interface)
-{
-    // BEGIN_SUB_TUTORIAL table1
-    //
-    // Creating Environment
-    // ^^^^^^^^^^^^^^^^^^^^
-    // Create vector to hold 3 collision objects.
-    std::vector<moveit_msgs::CollisionObject> collision_objects;
-    collision_objects.resize(1);
+    // move_group.move();
+    ros::WallDuration(3.0).sleep(); //< Uses system time to delay for 1.0 second.
 
-    // BEGIN_SUB_TUTORIAL object
-    // Define the object that we will be manipulating
-    collision_objects[0].header.frame_id = frame_id;
-    collision_objects[0].id = "object";
+    // openGripper(grasps[0].grasp_posture);
+    move_group.move();
 
-    /* Define the primitive and its dimensions. */
-    collision_objects[0].primitives.resize(1);
-    collision_objects[0].primitives[0].type = collision_objects[1].primitives[0].BOX;
-    collision_objects[0].primitives[0].dimensions.resize(3);
-    collision_objects[0].primitives[0].dimensions[0] = 0.04;
-    collision_objects[0].primitives[0].dimensions[1] = 0.04;
-    collision_objects[0].primitives[0].dimensions[2] = 0.04;
+    //move_group.constructPickupGoal("object", grasps);
 
-    /* Define the pose of the object. */
-    collision_objects[0].primitive_poses.resize(1);
-    collision_objects[0].primitive_poses[0].position.x = 0.65;
-    collision_objects[0].primitive_poses[0].position.y = 0;
-    collision_objects[0].primitive_poses[0].position.z = 1.18;
+    // // BEGIN_SUB_TUTORIAL pick3
+    // // Set support surface as table1.
+    // move_group.setSupportSurfaceName("table1");
+    // // Call pick to pick up the object using the grasps given
+    // move_group.pick("object", grasps);
     // END_SUB_TUTORIAL
-
-
-    // ADD ALL THE COLLISION OBJECTS/OBSTACLES HERE
-
-    collision_objects[0].operation = collision_objects[0].ADD;
-
-    planning_scene_interface.applyCollisionObjects(collision_objects);
 }
 
 int main(int argc, char **argv)
@@ -207,16 +190,21 @@ int main(int argc, char **argv)
     moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
     moveit::planning_interface::MoveGroupInterface arm("arm_with_torso");
     moveit::planning_interface::MoveGroupInterface gripper("gripper");
+    //moveit::planning_interface::MoveGroupInterface object("object");
 
     gripper.setPlanningTime(45.0);
 
-    addCollisionObjects(planning_scene_interface);
+    ros::WallDuration(1.0).sleep(); //< Uses system time to delay for 1.0 second.
+
+    // openGripper(arm);
+
+    // closedGripper(arm);
+
+    pick(gripper);
 
     ros::WallDuration(1.0).sleep(); //< Uses system time to delay for 1.0 second.
 
-    pick(arm);
-
-    ros::WallDuration(1.0).sleep(); //< Uses system time to delay for 1.0 second.
+    //place(arm);
 
     ros::shutdown();
 
