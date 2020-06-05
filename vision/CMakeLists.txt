@@ -31,11 +31,15 @@ include_directories(${THIS_PACKAGE_INCLUDE_DIRS}
   )
   
 add_executable(vision src/vision.cpp)
+add_executable(vision_service src/service.cpp src/vision_c.cpp)
 
   
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
 target_link_libraries(vision ${OpenCV_LIBRARIES} ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
+target_link_libraries(vision_service ${OpenCV_LIBRARIES} ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
 add_dependencies(vision ${catkin_EXPORTED_TARGETS})
+add_dependencies(vision_service ${catkin_EXPORTED_TARGETS})
 
 install(TARGETS vision DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+install(TARGETS vision_service DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

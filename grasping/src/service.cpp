@@ -10,8 +10,7 @@ bool graspingCallback(grasping::pose::Request &req, grasping::pose::Response &re
     auto e_pose = req.target.position;
 
     ROS_INFO_STREAM("Moving from pose: (" << s_pose.x << ", " << s_pose.y << ", " << s_pose.z << ")");
-    ROS_INFO_STREAM("To pose: (" << e_pose.x << ", " << e_pose.y << ", " << e_pose.z << ")");
-    ROS_INFO_STREAM("\n");
+    ROS_INFO_STREAM("To pose: (" << e_pose.x << ", " << e_pose.y << ", " << e_pose.z << ")\n");
 
     res.success = true;
     return true;

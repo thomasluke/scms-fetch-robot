@@ -3,7 +3,7 @@
 
 Integration::Integration(ros::NodeHandle nh) : nh_(nh)
 {
-    sub_ = nh_.subscribe("vision", 1000, &Integration::visionCallback, this);
+    sub_ = nh_.subscribe("vision_poses", 1000, &Integration::visionCallback, this);
     client_ = nh_.serviceClient<grasping::pose>("grasping_service");
 }
 Integration::~Integration() {}
@@ -19,6 +19,8 @@ void Integration::setBottleOffset(const geometry_msgs::Point &offset)
 
 void Integration::visionCallback(const geometry_msgs::PoseArrayConstPtr &msg)
 {
+    ROS_INFO_STREAM("Recieved new bottle coordinates");
+
     std::vector<geometry_msgs::Pose> bottles = msg->poses;
     std::deque<std::pair<geometry_msgs::Pose, geometry_msgs::Pose>> moved_bottles;
     geometry_msgs::Point offset;

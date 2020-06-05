@@ -19,7 +19,6 @@ int main(int argc, char **argv)
     ros::NodeHandle n;
 
     // Integration integration(n);
-    ROS_INFO_STREAM("STARTING Intergration");
     std::shared_ptr<Integration> integration(new Integration(n));
 
     geometry_msgs::Point offset;
