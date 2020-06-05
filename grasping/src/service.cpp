@@ -1,7 +1,6 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "grasping/pose.h"
-
 #include "grasp.h"
 
 bool graspingCallback(grasping::pose::Request &req, grasping::pose::Response &res)

@@ -25,6 +25,7 @@ generate_messages(
     DEPENDENCIES
     std_msgs
     geometry_msgs
+    grasping
 )
 
 ## Declare a catkin package
@@ -36,6 +37,7 @@ catkin_package(
         roscpp 
         std_msgs 
         geometry_msgs
+        grasping
 )
 
 include_directories(include ${THIS_PACKAGE_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
