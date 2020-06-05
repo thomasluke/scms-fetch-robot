@@ -56,7 +56,7 @@
 
 #include <string>
 
-std::string frame_id = "arm";
+std::string frame_id = "gripper";
 
 void openGripper(trajectory_msgs::JointTrajectory &posture)
 {
@@ -107,14 +107,14 @@ void pick(moveit::planning_interface::MoveGroupInterface &move_group)
     // of the cube). |br|
     // Therefore, the position for panda_link8 = 5 - (length of cube/2 - distance b/w panda_link8 and palm of eef - some
     // extra padding)
-   
-   // DEFINE POSE OF THE FETCH ROBOT ARM
-   
+
+    // DEFINE POSE OF THE FETCH ROBOT ARM
+
     grasps[0].grasp_pose.header.frame_id = frame_id;
     tf2::Quaternion orientation;
     orientation.setRPY(0, 0, 0);
     grasps[0].grasp_pose.pose.orientation = tf2::toMsg(orientation);
-    grasps[0].grasp_pose.pose.position.x = 0.65;
+    grasps[0].grasp_pose.pose.position.x = 0.45;
     grasps[0].grasp_pose.pose.position.y = 0;
     grasps[0].grasp_pose.pose.position.z = 1.2;
 
@@ -148,7 +148,7 @@ void pick(moveit::planning_interface::MoveGroupInterface &move_group)
     // // Setting posture of eef during grasp
     // // +++++++++++++++++++++++++++++++++++
     closedGripper(grasps[0].grasp_posture);
-    
+
     // BEGIN_SUB_TUTORIAL pick3
     // Set support surface as table1.
     //move_group.setSupportSurfaceName("table1");
@@ -169,7 +169,7 @@ void addCollisionObjects(moveit::planning_interface::PlanningSceneInterface &pla
 
     // BEGIN_SUB_TUTORIAL object
     // Define the object that we will be manipulating
-    collision_objects[0].header.frame_id = frame_id;
+    collision_objects[0].header.frame_id = "base_link";
     collision_objects[0].id = "object";
 
     /* Define the primitive and its dimensions. */
@@ -187,12 +187,22 @@ void addCollisionObjects(moveit::planning_interface::PlanningSceneInterface &pla
     collision_objects[0].primitive_poses[0].position.z = 1.18;
     // END_SUB_TUTORIAL
 
-
     // ADD ALL THE COLLISION OBJECTS/OBSTACLES HERE
 
     collision_objects[0].operation = collision_objects[0].ADD;
 
     planning_scene_interface.applyCollisionObjects(collision_objects);
+   // planning_scene_interface.removeCollisionObjects(collision_objects);
+
+    // moveit_msgs::AttachedCollisionObject attached_object;
+
+    // // Note that attaching an object to the robot requires
+    // // the corresponding operation to be specified as an ADD operation.
+    // attached_object.object.operation = attached_object.object.ADD;
+
+    // // Since we are attaching the object to the robot hand to simulate picking up the object,
+    // // we want the collision checker to ignore collisions between the object and the robot hand.
+    // attached_object.touch_links = std::vector<std::string>{"gripper", "r_gripper_finger_joint", "l_gripper_finger_joint"};
 }
 
 int main(int argc, char **argv)
