@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include "std_msgs/String.h"
 //#include <AlvarMarkers.h>
-#include <tf2_geometry_msgs.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
 static const std::string OPENCV_WINDOW = "Image window";
 
@@ -23,11 +23,11 @@ class ImageConverter
 
 public:
   ImageConverter()
-    : it_(nh25_)
+      : it_(nh25_)
   {
     // Subscrive to input video feed and publish output video feed
     image_sub_ = it_.subscribe("/head_camera/rgb/image_raw", 1,
-      &ImageConverter::imageCb, this);
+                               &ImageConverter::imageCb, this);
     image_pub_ = it_.advertise("/image_converter/output_video", 1);
 
     cv::namedWindow(OPENCV_WINDOW);
@@ -38,14 +38,14 @@ public:
     cv::destroyWindow(OPENCV_WINDOW);
   }
 
-  void imageCb(const sensor_msgs::ImageConstPtr& msg)
+  void imageCb(const sensor_msgs::ImageConstPtr &msg)
   {
     cv_bridge::CvImagePtr cv_ptr;
     try
     {
       cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
     }
-    catch (cv_bridge::Exception& e)
+    catch (cv_bridge::Exception &e)
     {
       ROS_ERROR("cv_bridge exception: %s", e.what());
       return;
@@ -53,7 +53,7 @@ public:
 
     // Draw an example circle on the video stream
     if (cv_ptr->image.rows > 60 && cv_ptr->image.cols > 60)
-      cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0));
+      cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255, 0, 0));
 
     // Update GUI Window
     cv::imshow(OPENCV_WINDOW, cv_ptr->image);
@@ -64,7 +64,7 @@ public:
   }
 };
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
   //ros::Subscriber(al/ar_track_alvar_msgs);
   ros::init(argc, argv, "image_converter");

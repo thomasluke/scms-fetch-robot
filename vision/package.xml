@@ -28,9 +28,11 @@
   <build_depend>drink_menu</build_depend>
   <build_depend>AlvarMarkers</build_depend>
   <build_depend>tf</build_depend>
+  <build_depend>tf2_ros</build_depend>
+  <build_depend>tf2_eigen</build_depend>
+  <build_depend>tf2_geometry_msgs</build_depend>
 
 
-  <exec_depend>tf</exec_depend>
   <exec_depend>drink_menu</exec_depend>
   <exec_depend>message_runtime</exec_depend>
   <exec_depend>roscpp</exec_depend>
@@ -39,6 +41,10 @@
   <exec_depend>cv_bridge</exec_depend>
   <exec_depend>image_transport</exec_depend>
   <exec_depend>AlvarMarkers</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>tf2_eigen</exec_depend>
+  <exec_depend>tf2_geometry_msgs</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
