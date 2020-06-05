@@ -9,8 +9,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "std_msgs/String.h"
-//#include <AlvarMarkers.h>
-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <ar_track_alvar_msgs/AlvarMarker.h>
+#include <ar_track_alvar_msgs/AlvarMarkers.h>
+//#include <tf2_geometry_msgs.h>
 
 static const std::string OPENCV_WINDOW = "Image window";
 
@@ -66,6 +67,12 @@ public:
 
 int main(int argc, char **argv)
 {
+  /*
+  ros::NodeHandle vs_;
+  ros::Subscriber see_;
+  see_ = vs_.subscribe("AR_TRACK_ALVAR_MSGS_MESSAGE_ALVARMARKERS_H");
+  see_.getTopic
+  */
   //ros::Subscriber(al/ar_track_alvar_msgs);
   ros::init(argc, argv, "image_converter");
   ImageConverter ic;
