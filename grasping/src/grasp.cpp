@@ -36,7 +36,7 @@ void Grasp::closeGripper(trajectory_msgs::JointTrajectory &posture)
     posture.points[0].time_from_start = ros::Duration(0.5);
 }
 
-void Grasp::pick(const std::string &name, const geometry_msgs::Pose &object)
+bool Grasp::pick(const std::string &name, const geometry_msgs::Pose &object)
 {
     // Create a vector of grasps to be attempted, currently only creating single grasp.
     // This is essentially useful when using a grasp generator to generate and test multiple grasps.
@@ -49,19 +49,20 @@ void Grasp::pick(const std::string &name, const geometry_msgs::Pose &object)
     orientation.setRPY(0, 0, 0);
     grasps[0].grasp_pose.pose = object;
     grasps[0].grasp_pose.pose.orientation = tf2::toMsg(orientation);
+    addPoints(grasps[0].grasp_pose.pose.position, pick_offset_);    //< offset the gripper position relative to the object.
     addPoints(grasps[0].grasp_pose.pose.position, gripper_offset_); //< offset the gripper position relative to the object.
 
     /* Defined with respect to frame_id */
     grasps[0].pre_grasp_approach.direction.header.frame_id = FRAME_ID;
     /* Direction is set as positive x axis */
-    grasps[0].pre_grasp_approach.direction.vector.y = 1.0;
+    grasps[0].pre_grasp_approach.direction.vector.x = 1.0;
     grasps[0].pre_grasp_approach.min_distance = 0.095;
     grasps[0].pre_grasp_approach.desired_distance = 0.115;
 
     /* Defined with respect to frame_id */
     grasps[0].post_grasp_retreat.direction.header.frame_id = FRAME_ID;
     /* Direction is set as positive z axis */
-    grasps[0].post_grasp_retreat.direction.vector.y = -0.5;
+    grasps[0].post_grasp_retreat.direction.vector.x = -0.5;
     grasps[0].post_grasp_retreat.min_distance = 0.1;
     grasps[0].post_grasp_retreat.desired_distance = 0.25;
 
@@ -70,12 +71,12 @@ void Grasp::pick(const std::string &name, const geometry_msgs::Pose &object)
     closeGripper(grasps[0].grasp_posture);
 
     // Call pick to pick up the object using the grasps given
-    ROS_INFO_STREAM("Pre Pick bottle");
-    move_group_.pick(name, grasps);
-    ROS_INFO_STREAM("Picked bottle");
+    auto result = move_group_.pick(name, grasps);
+
+    return MoveItError(result);
 }
 
-void Grasp::place(const std::string &name, const geometry_msgs::Pose &object)
+bool Grasp::place(const std::string &name, const geometry_msgs::Pose &object)
 {
     std::vector<moveit_msgs::PlaceLocation> place_location;
     place_location.resize(1);
@@ -93,7 +94,7 @@ void Grasp::place(const std::string &name, const geometry_msgs::Pose &object)
     place_location[0].pre_place_approach.desired_distance = 0.115;
 
     place_location[0].post_place_retreat.direction.header.frame_id = FRAME_ID;
-    place_location[0].post_place_retreat.direction.vector.y = -1.0;
+    place_location[0].post_place_retreat.direction.vector.z = 1.0;
     place_location[0].post_place_retreat.min_distance = 0.1;
     place_location[0].post_place_retreat.desired_distance = 0.25;
 
@@ -102,9 +103,9 @@ void Grasp::place(const std::string &name, const geometry_msgs::Pose &object)
     // Set support surface as table2.
     //move_group.setSupportSurfaceName("table2");
     // Call place to place the object using the place locations given.
-    ROS_INFO_STREAM("Pre Place bottle");
-    move_group_.place(name, place_location);
-    ROS_INFO_STREAM("Placed bottle");
+    auto result = move_group_.place(name, place_location);
+
+    return MoveItError(result);
 }
 
 void Grasp::addBottleObject(const std::string &name, const geometry_msgs::Pose &bottle)
@@ -125,6 +126,7 @@ void Grasp::addBottleObject(const std::string &name, const geometry_msgs::Pose &
     /* Define the pose of the object. */
     collision_object.primitive_poses.resize(1);
     collision_object.primitive_poses[0] = bottle;
+    addPoints(collision_object.primitive_poses[0].position, bottle_offset_); //< offset the bottle position.
     collision_object.operation = collision_object.ADD;
 
     planning_scene_.applyCollisionObject(collision_object);
@@ -325,21 +327,32 @@ void Grasp::setupScene()
     planning_scene_.applyCollisionObjects(collision_objects);
 }
 
-void Grasp::moveBottle(geometry_msgs::Pose current, geometry_msgs::Pose target)
+bool Grasp::moveBottle(geometry_msgs::Pose current, geometry_msgs::Pose target)
 {
     ROS_INFO_STREAM("Adding bottle");
     addBottleObject("bottle", current);
     ros::WallDuration(0.1).sleep();
 
     ROS_INFO_STREAM("Picking bottle");
-    pick("bottle", current);
+    if (!pick("bottle", current))
+    {
+        return false;
+    }
+
     ros::WallDuration(0.1).sleep();
     ROS_INFO_STREAM("Placing bottle");
-    place("bottle", target);
-    ros::WallDuration(0.1).sleep();
 
-    ROS_INFO_STREAM("Removing bottle");
+    if (!place("bottle", target))
+    {
+        ROS_INFO_STREAM("Removing bottle\n");
+        removeBottleObject("bottle");
+        return false;
+    }
+
+    ROS_INFO_STREAM("Removing bottle\n");
     removeBottleObject("bottle");
+
+    return true;
 }
 
 bool Grasp::graspingCallback(grasping::move::Request &req, grasping::move::Response &res)
@@ -350,20 +363,29 @@ bool Grasp::graspingCallback(grasping::move::Request &req, grasping::move::Respo
     ROS_INFO_STREAM("Moving from pose: (" << s_pose.x << ", " << s_pose.y << ", " << s_pose.z << ")");
     ROS_INFO_STREAM("To pose: (" << e_pose.x << ", " << e_pose.y << ", " << e_pose.z << ")\n");
 
-    moveBottle(req.current, req.target);
+    res.success = moveBottle(req.current, req.target);
 
-    res.success = true;
+    ROS_INFO_STREAM("Grasing done\n");
     return true;
 }
-
 void Grasp::setGripperOffset(const geometry_msgs::Point &offset)
 {
     gripper_offset_ = offset;
 }
 
+void Grasp::setPickOffset(const geometry_msgs::Point &offset)
+{
+    pick_offset_ = offset;
+}
+
 void Grasp::setFetchOffset(const geometry_msgs::Point &offset)
 {
     fetch_offset_ = offset;
+}
+
+void Grasp::setBottleOffset(const geometry_msgs::Point &offset)
+{
+    bottle_offset_ = offset;
 }
 
 void Grasp::addPoints(geometry_msgs::Point &pt1, const geometry_msgs::Point &pt2)
@@ -380,5 +402,17 @@ void Grasp::seperateThread()
     {
 
         rate_limiter.sleep();
+    }
+}
+
+bool Grasp::MoveItError(const moveit::planning_interface::MoveItErrorCode &ec)
+{
+    if (ec == moveit::planning_interface::MoveItErrorCode::SUCCESS)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }

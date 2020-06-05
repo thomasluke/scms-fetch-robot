@@ -33,13 +33,23 @@ int main(int argc, char *argv[])
     std::shared_ptr<Grasp> grasp(new Grasp(n, "arm_with_torso"));
     std::thread t(&Grasp::seperateThread, grasp);
 
-    // Grasp grasp(n, "arm_with_torso");
-
     geometry_msgs::Point gripper_offset;
-    gripper_offset.x = -0.2;
+    gripper_offset.x = 0;
     gripper_offset.y = 0;
-    gripper_offset.z = 0;
+    gripper_offset.z = 0.1;
     grasp->setGripperOffset(gripper_offset);
+
+    geometry_msgs::Point pick_offset;
+    pick_offset.x = -0.2;
+    pick_offset.y = 0;
+    pick_offset.z = 0.0;
+    grasp->setPickOffset(pick_offset);
+
+    geometry_msgs::Point bottle_offset;
+    bottle_offset.x = 0;
+    bottle_offset.y = 0;
+    bottle_offset.z = 0.1;
+    grasp->setBottleOffset(bottle_offset);
 
     geometry_msgs::Point fetch_offset;
     fetch_offset.x = -(0.6);
@@ -64,7 +74,6 @@ int main(int argc, char *argv[])
 
     // grasp->graspingCallback(move.request, move.response);
 
-    // ros::spin();
     ros::waitForShutdown();
     t.join();
 

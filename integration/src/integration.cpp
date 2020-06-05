@@ -38,7 +38,14 @@ void Integration::visionCallback(const geometry_msgs::PoseArrayConstPtr &msg)
 
         if (client_.call(move))
         {
-            moved_bottles.push_back({move.request.current, move.request.target});
+            if (move.response.success)
+            {
+                moved_bottles.push_back({move.request.current, move.request.target});
+            }
+            else
+            {
+                ROS_WARN_STREAM("Gripper could not move to bottle!");
+            }
         }
         else
         {
@@ -57,6 +64,10 @@ void Integration::visionCallback(const geometry_msgs::PoseArrayConstPtr &msg)
 
         if (client_.call(move))
         {
+            if (!move.response.success)
+            {
+                ROS_WARN_STREAM("Gripper could not move to bottle!");
+            }
         }
         else
         {
