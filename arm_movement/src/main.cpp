@@ -130,15 +130,15 @@ int main(int argc, char **argv)
     geometry_msgs::Pose target_pose1;
 
     target_pose1.orientation.w = 1.0;
-    target_pose1.position.x = 0.7; // Distance away from robot (distance to the bottles)
+    //target_pose1.position.x = 0.7; // Distance away from robot (distance to the bottles)
     // target_pose1.position.y = -0.7;
     // target_pose1.position.z = 1.0;
 
     // std::cout << "Please select orientation" << std::endl;
     // std::cin >> target_pose1.orientation.w;
 
-    // std::cout << "Please select x position" << std::endl;
-    // std::cin >> target_pose1.position.x;
+    std::cout << "Please select x position" << std::endl;
+    std::cin >> target_pose1.position.x;
 
     std::cout << "Please select y position" << std::endl;
     std::cin >> target_pose1.position.y;
@@ -163,7 +163,6 @@ int main(int argc, char **argv)
     //sleep(5.0);
 
     // geometry_msgs::Pose target_gripper;
-    
 
     // target_gripper.orientation.w = 1.0;
     // target_gripper.position.x = 0.7; // Distance away from robot (distance to the bottles)
@@ -200,13 +199,12 @@ int main(int argc, char **argv)
 
     // gripper.move();
 
-
     // ROS_INFO("Visualizing gripper plan (grip bottle) %s",
     //          success ? "" : "FAILED");
     // /* Sleep to give Rviz time to visualize the plan. */
     // sleep(10.0);
 
-    gripper.pick("gripper",false);
+    //gripper.pick("gripper", false);
     // group.pick("gripper", false);
 
     //group.setStartState()
@@ -349,37 +347,37 @@ int main(int argc, char **argv)
     // Adding/Removing Objects and Attaching/Detaching Objects
     // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     // First, we will define the collision object message.
-    moveit_msgs::CollisionObject collision_object;
-    collision_object.header.frame_id = group.getPlanningFrame();
+    // moveit_msgs::CollisionObject collision_object;
+    // collision_object.header.frame_id = group.getPlanningFrame();
 
-    /* The id of the object is used to identify it. */
-    collision_object.id = "box1";
+    // /* The id of the object is used to identify it. */
+    // collision_object.id = "box1";
 
-    /* Define a box to add to the world. */
-    shape_msgs::SolidPrimitive primitive;
-    primitive.type = primitive.BOX;
-    primitive.dimensions.resize(3);
-    primitive.dimensions[0] = 0.85; // Bench dimensions + leway
-    primitive.dimensions[1] = 4.7;
-    primitive.dimensions[2] = 0.1; // Bench dimensions + leway
+    // /* Define a box to add to the world. */
+    // shape_msgs::SolidPrimitive primitive;
+    // primitive.type = primitive.BOX;
+    // primitive.dimensions.resize(3);
+    // primitive.dimensions[0] = 0.5; // Bench dimensions + leway
+    // primitive.dimensions[1] = 5;
+    // primitive.dimensions[2] = 0.06; // Bench dimensions + leway
 
-    /* A pose for the box (specified relative to frame_id) */
-    geometry_msgs::Pose box_pose;
-    box_pose.orientation.w = 1.0;
-    box_pose.position.x = 1.2;
-    box_pose.position.y = 0;
-    box_pose.position.z = 1;
+    // /* A pose for the box (specified relative to frame_id) */
+    // geometry_msgs::Pose box_pose;
+    // // box_pose.orientation.w = 1.0;
+    // box_pose.position.x = 1.075;
+    // box_pose.position.y = 0;
+    // box_pose.position.z = 1.03;
 
-    collision_object.primitives.push_back(primitive);
-    collision_object.primitive_poses.push_back(box_pose);
-    collision_object.operation = collision_object.ADD;
+    // collision_object.primitives.push_back(primitive);
+    // collision_object.primitive_poses.push_back(box_pose);
+    // collision_object.operation = collision_object.ADD;
 
-    std::vector<moveit_msgs::CollisionObject> collision_objects;
-    collision_objects.push_back(collision_object);
+    // std::vector<moveit_msgs::CollisionObject> collision_objects;
+    // collision_objects.push_back(collision_object);
 
-    // Now, let's add the collision object into the world
-    ROS_INFO("Add an object into the world");
-    planning_scene_interface.addCollisionObjects(collision_objects);
+    // // Now, let's add the collision object into the world
+    // ROS_INFO("Add an object into the world");
+    // planning_scene_interface.addCollisionObjects(collision_objects);
 
     /* Sleep so we have time to see the object in RViz */
     sleep(2.0);
