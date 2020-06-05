@@ -499,7 +499,7 @@
             <init_from>gin/Aluminum.jpg</init_from>
         </image>
         <image id="ID57">
-            <init_from>gin/texture.png</init_from>
+            <init_from>gin/MarkerData_0_3.png</init_from>
         </image>
         <image id="ID71">
             <init_from>gin/texture_0.png</init_from>

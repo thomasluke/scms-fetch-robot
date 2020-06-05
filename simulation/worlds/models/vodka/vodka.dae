@@ -499,7 +499,7 @@
             <init_from>vodka/Aluminum.jpg</init_from>
         </image>
         <image id="ID57">
-            <init_from>vodka/texture.png</init_from>
+            <init_from>vodka/MarkerData_0_4.png</init_from>
         </image>
         <image id="ID71">
             <init_from>vodka/texture_0.png</init_from>

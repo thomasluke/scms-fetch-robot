@@ -13,6 +13,9 @@ find_package( catkin REQUIRED COMPONENTS
     cv_bridge
     image_transport
     message_generation
+    message_runtime
+
+ar_track_alvar
   )
 
 catkin_package(
@@ -21,6 +24,7 @@ catkin_package(
   CATKIN_DEPENDS
     cv_bridge
     image_transport
+    ar_track_alvar
   
 )
 
@@ -34,7 +38,11 @@ add_executable(vision src/vision.cpp)
   
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
-target_link_libraries(vision ${OpenCV_LIBRARIES} ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
+target_link_libraries(vision  ${OpenCV_LIBRARIES} ${catkin_LIBRARIES} ${Boost_LIBRARIES} )
 add_dependencies(vision ${catkin_EXPORTED_TARGETS})
 
 install(TARGETS vision DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+
+
+
