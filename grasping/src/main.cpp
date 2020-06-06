@@ -530,21 +530,21 @@ int main(int argc, char **argv)
     ros::AsyncSpinner spinner(1);
     spinner.start();
 
+   geometry_msgs::Pose fetch;
+    fetch.position.x = -(0.49998);
+    fetch.position.y = -(1.5);
+    fetch.position.z = -(0.004772);
+    fetch.orientation.w = 1;
+   
     geometry_msgs::Pose bottle;
-    bottle.position.x = 0.65;
-    bottle.position.y = 0;
-    bottle.position.z = 1.2;
+    bottle.position.x += (0.7);
+    bottle.position.y += (0);
+    bottle.position.z += (1.4);
 
     geometry_msgs::Pose bar;
     bar.position.x = 0.5;
     bar.position.y = 0.3;
     bar.position.z = 0.8;
-
-    geometry_msgs::Pose fetch;
-    fetch.position.x = -(0.49998);
-    fetch.position.y = -(1.5);
-    fetch.position.z = -(0.004772);
-    fetch.orientation.w = 1;
 
     ros::WallDuration(1.0).sleep(); //< Uses system time to delay for 1.0 second.
 
@@ -554,16 +554,17 @@ int main(int argc, char **argv)
 
     gripper.setPlanningTime(45.0);
 
-    addCollisionObjects(planning_scene_interface, bottle);
+    //addCollisionObjects(planning_scene_interface, bottle);
     addObstacles(planning_scene_interface, fetch);
+    addBottleObject(planning_scene_interface, "bottle", bottle);
 
     ros::WallDuration(1.0).sleep(); //< Uses system time to delay for 1.0 second.
 
-    pick(arm, "object", bottle);
+    pick(arm, "bottle", bottle);
 
     ros::WallDuration(1.0).sleep(); //< Uses system time to delay for 1.0 second.
 
-    place(arm, "object", bar);
+    place(arm, "bottle", bar);
 
     ros::shutdown();
 
