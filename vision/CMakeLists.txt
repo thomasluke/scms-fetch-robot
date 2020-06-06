@@ -39,8 +39,8 @@ include_directories(${THIS_PACKAGE_INCLUDE_DIRS}
     ${Boost_INCLUDE_DIR}
 )
   
-find_package(AlvarMarkers)
-include_directories(${AlvarMarkers_INCLUDE_DIRS})
+#find_package(AlvarMarkers)
+#include_directories(${AlvarMarkers_INCLUDE_DIRS})
 
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
