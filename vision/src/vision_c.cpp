@@ -34,9 +34,12 @@ void Vision::publishVisionPoses(const geometry_msgs::PoseArray &poses)
 geometry_msgs::Pose Vision::imageProcessing(const std::string drink)
 {
     geometry_msgs::Pose pose;
-    pose.position.x = (*random_double)(*nd_generator);
-    pose.position.y = (*random_double)(*nd_generator);
-    pose.position.z = (*random_double)(*nd_generator);
+    // pose.position.x = (*random_double)(*nd_generator);
+    // pose.position.y = (*random_double)(*nd_generator);
+    // pose.position.z = (*random_double)(*nd_generator);
+    pose.position.x = 1.05; //0.9
+    pose.position.y = 0.10; //0.1
+    pose.position.z = 1.05;
 
     return pose;
 }

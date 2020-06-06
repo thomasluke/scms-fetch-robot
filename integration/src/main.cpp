@@ -16,6 +16,7 @@ int main(int argc, char **argv)
      * The first NodeHandle constructed will fully initialize this node, and the last
      * NodeHandle destructed will close down the node.
      */
+
     ros::NodeHandle n;
 
     // Integration integration(n);
@@ -28,9 +29,9 @@ int main(int argc, char **argv)
     integration->setBottleOffset(offset);
 
     geometry_msgs::Pose surface;
-    surface.position.x = -4.0;
-    surface.position.y = 1.2;
-    surface.position.z = 0.8;
+    surface.position.x = 0.50;
+    surface.position.y = 0.75;
+    surface.position.z = 1.025;
     integration->setSurface(surface);
 
     ros::spin();
