@@ -3,10 +3,12 @@
 const std::string Grasp::FRAME_ID = "base_link";
 
 Grasp::Grasp(ros::NodeHandle &nh, std::string move_group)
-    : nh_(nh), move_group_(move_group), spinner_(1)
+    : nh_(nh), move_group_(move_group), spinner_(4)
 {
     spinner_.start();
-    service_ = nh_.advertiseService("grasping_service", &Grasp::graspingCallback, this);
+    service1_ = nh_.advertiseService("grasping_service", &Grasp::graspingCallback, this);
+    service2_ = nh_.advertiseService("grasping_service_shelf_to_bar", &Grasp::shelfToBarCallback, this);
+    service3_ = nh_.advertiseService("grasping_service_bar_to_shelf", &Grasp::barToShelfCallback, this);
     move_group_.setPlanningTime(45.0);
 }
 
@@ -46,22 +48,110 @@ bool Grasp::pick(const std::string &name, const geometry_msgs::Pose &object)
     // DEFINE POSE OF THE FETCH ROBOT ARM
     grasps[0].grasp_pose.header.frame_id = FRAME_ID;
     tf2::Quaternion orientation;
-    orientation.setRPY(0, 0, 0);
+    orientation.setRPY(0, 0, (M_PI / 2));
     grasps[0].grasp_pose.pose = object;
-    grasps[0].grasp_pose.pose.orientation = tf2::toMsg(orientation);
-    addPoints(grasps[0].grasp_pose.pose.position, pick_offset_);    //< offset the gripper position relative to the object.
+    // addQuaternion(grasps[0].grasp_pose.pose.orientation, tf2::toMsg(orientation));
+    // addPoints(grasps[0].grasp_pose.pose.position, pick_offset_);    //< offset the gripper position relative to the object.
     addPoints(grasps[0].grasp_pose.pose.position, gripper_offset_); //< offset the gripper position relative to the object.
+
+    auto vector = quaternionToVector(grasps[0].grasp_pose.pose.orientation);
+
+    ROS_INFO_STREAM("Pick vector: (" << vector.getX() << ", " << vector.getY() << ", " << vector.getZ() << ")");
 
     /* Defined with respect to frame_id */
     grasps[0].pre_grasp_approach.direction.header.frame_id = FRAME_ID;
-    /* Direction is set as positive x axis */
+    grasps[0].pre_grasp_approach.direction.vector = tf2::toMsg(vector);
+    // grasps[0].pre_grasp_approach.direction.vector.y = 1.0;
+    grasps[0].pre_grasp_approach.min_distance = 0.095;
+    grasps[0].pre_grasp_approach.desired_distance = 0.115;
+    auto vectorA = grasps[0].pre_grasp_approach.direction.vector;
+    ROS_INFO_STREAM("Pick vector A: (" << vectorA.x << ", " << vectorA.y << ", " << vectorA.z << ")");
+
+    /* Defined with respect to frame_id */
+    grasps[0].post_grasp_retreat.direction.header.frame_id = FRAME_ID;
+    grasps[0].post_grasp_retreat.direction.vector = tf2::toMsg(vector * -0.5);
+    // grasps[0].post_grasp_retreat.direction.vector.y = -0.5;
+    grasps[0].post_grasp_retreat.min_distance = 0.1;
+    grasps[0].post_grasp_retreat.desired_distance = 0.25;
+    auto vectorB = grasps[0].post_grasp_retreat.direction.vector;
+    ROS_INFO_STREAM("Pick vector B: (" << vectorB.x << ", " << vectorB.y << ", " << vectorB.z << ")");
+
+    openGripper(grasps[0].pre_grasp_posture);
+
+    closeGripper(grasps[0].grasp_posture);
+
+    auto s_qu = grasps[0].grasp_pose.pose.orientation;
+
+    ROS_INFO_STREAM("Place q: (" << s_qu.w << ", " << s_qu.x << ", " << s_qu.y << ", " << s_qu.z << ")");
+
+    // Call pick to pick up the object using the grasps given
+    auto result = move_group_.pick(name, grasps);
+
+    return moveItError(result);
+}
+
+bool Grasp::pickBar(const std::string &name, const geometry_msgs::Pose &object)
+{
+    // Create a vector of grasps to be attempted, currently only creating single grasp.
+    // This is essentially useful when using a grasp generator to generate and test multiple grasps.
+    std::vector<moveit_msgs::Grasp> grasps;
+    grasps.resize(1);
+
+    // DEFINE POSE OF THE FETCH ROBOT ARM
+    grasps[0].grasp_pose.header.frame_id = FRAME_ID;
+    tf2::Quaternion orientation;
+    orientation.setRPY(0, 0, (M_PI / 2));
+    grasps[0].grasp_pose.pose.orientation = tf2::toMsg(orientation);
+    grasps[0].grasp_pose.pose.position = object.position;
+    addPoints(grasps[0].grasp_pose.pose.position, pick_bar_offset_); //< offset the gripper position relative to the object.
+    addPoints(grasps[0].grasp_pose.pose.position, gripper_offset_);  //< offset the gripper position relative to the object.
+
+    /* Defined with respect to frame_id */
+    grasps[0].pre_grasp_approach.direction.header.frame_id = FRAME_ID;
+    grasps[0].pre_grasp_approach.direction.vector.y = 1.0;
+    grasps[0].pre_grasp_approach.min_distance = 0.095;
+    grasps[0].pre_grasp_approach.desired_distance = 0.115;
+
+    /* Defined with respect to frame_id */
+    grasps[0].post_grasp_retreat.direction.header.frame_id = FRAME_ID;
+    grasps[0].post_grasp_retreat.direction.vector.y = -0.5;
+    grasps[0].post_grasp_retreat.min_distance = 0.1;
+    grasps[0].post_grasp_retreat.desired_distance = 0.25;
+
+    openGripper(grasps[0].pre_grasp_posture);
+
+    closeGripper(grasps[0].grasp_posture);
+
+    // Call pick to pick up the object using the grasps given
+    auto result = move_group_.pick(name, grasps);
+
+    return moveItError(result);
+}
+
+bool Grasp::pickShelf(const std::string &name, const geometry_msgs::Pose &object)
+{
+    // Create a vector of grasps to be attempted, currently only creating single grasp.
+    // This is essentially useful when using a grasp generator to generate and test multiple grasps.
+    std::vector<moveit_msgs::Grasp> grasps;
+    grasps.resize(1);
+
+    // DEFINE POSE OF THE FETCH ROBOT ARM
+    grasps[0].grasp_pose.header.frame_id = FRAME_ID;
+    tf2::Quaternion orientation;
+    orientation.setRPY(0, 0, 0);
+    grasps[0].grasp_pose.pose.orientation = tf2::toMsg(orientation);
+    grasps[0].grasp_pose.pose.position = object.position;
+    addPoints(grasps[0].grasp_pose.pose.position, pick_shelf_offset_); //< offset the gripper position relative to the object.
+    addPoints(grasps[0].grasp_pose.pose.position, gripper_offset_);    //< offset the gripper position relative to the object.
+
+    /* Defined with respect to frame_id */
+    grasps[0].pre_grasp_approach.direction.header.frame_id = FRAME_ID;
     grasps[0].pre_grasp_approach.direction.vector.x = 1.0;
     grasps[0].pre_grasp_approach.min_distance = 0.095;
     grasps[0].pre_grasp_approach.desired_distance = 0.115;
 
     /* Defined with respect to frame_id */
     grasps[0].post_grasp_retreat.direction.header.frame_id = FRAME_ID;
-    /* Direction is set as positive z axis */
     grasps[0].post_grasp_retreat.direction.vector.x = -0.5;
     grasps[0].post_grasp_retreat.min_distance = 0.1;
     grasps[0].post_grasp_retreat.desired_distance = 0.25;
@@ -73,7 +163,7 @@ bool Grasp::pick(const std::string &name, const geometry_msgs::Pose &object)
     // Call pick to pick up the object using the grasps given
     auto result = move_group_.pick(name, grasps);
 
-    return MoveItError(result);
+    return moveItError(result);
 }
 
 bool Grasp::place(const std::string &name, const geometry_msgs::Pose &object)
@@ -85,7 +175,53 @@ bool Grasp::place(const std::string &name, const geometry_msgs::Pose &object)
     tf2::Quaternion orientation;
     orientation.setRPY(0, 0, 0);
     place_location[0].place_pose.pose = object;
+    // addQuaternion(place_location[0].place_pose.pose.orientation, tf2::toMsg(orientation));
+    addPoints(place_location[0].place_pose.pose.position, gripper_offset_); //< offset the gripper position relative to the object.
+
+    auto vector = quaternionToVector(place_location[0].place_pose.pose.orientation);
+
+    ROS_INFO_STREAM("Place vector: (" << vector.getX() << ", " << vector.getY() << ", " << vector.getZ() << ")");
+
+    place_location[0].pre_place_approach.direction.header.frame_id = FRAME_ID;
+    place_location[0].pre_place_approach.direction.vector = tf2::toMsg(vector);
+    // place_location[0].pre_place_approach.direction.vector.y = -1.0;
+    place_location[0].pre_place_approach.min_distance = 0.095;
+    place_location[0].pre_place_approach.desired_distance = 0.115;
+    auto vectorA = place_location[0].pre_place_approach.direction.vector;
+    ROS_INFO_STREAM("Place vector A: (" << vectorA.x << ", " << vectorA.y << ", " << vectorA.z << ")");
+
+    place_location[0].post_place_retreat.direction.header.frame_id = FRAME_ID;
+    place_location[0].post_place_retreat.direction.vector = tf2::toMsg(vector * -0.5);
+    // place_location[0].post_place_retreat.direction.vector.y = 1.0;
+    place_location[0].post_place_retreat.min_distance = 0.1;
+    place_location[0].post_place_retreat.desired_distance = 0.25;
+    auto vectorB = place_location[0].post_place_retreat.direction.vector;
+    ROS_INFO_STREAM("Place vector B: (" << vectorB.x << ", " << vectorB.y << ", " << vectorB.z << ")");
+
+    openGripper(place_location[0].post_place_posture);
+
+    auto s_qu = place_location[0].place_pose.pose.orientation;
+
+    ROS_INFO_STREAM("Place q: (" << s_qu.w << ", " << s_qu.x << ", " << s_qu.y << ", " << s_qu.z << ")");
+
+    // Set support surface as table2.
+    //move_group.setSupportSurfaceName("table2");
+    // Call place to place the object using the place locations given.
+    auto result = move_group_.place(name, place_location);
+
+    return moveItError(result);
+}
+
+bool Grasp::placeBar(const std::string &name, const geometry_msgs::Pose &object)
+{
+    std::vector<moveit_msgs::PlaceLocation> place_location;
+    place_location.resize(1);
+
+    place_location[0].place_pose.header.frame_id = FRAME_ID;
+    tf2::Quaternion orientation;
+    orientation.setRPY(0, 0, (M_PI / 2.0));
     place_location[0].place_pose.pose.orientation = tf2::toMsg(orientation);
+    place_location[0].place_pose.pose.position = object.position;
     addPoints(place_location[0].place_pose.pose.position, gripper_offset_); //< offset the gripper position relative to the object.
 
     place_location[0].pre_place_approach.direction.header.frame_id = FRAME_ID;
@@ -100,12 +236,38 @@ bool Grasp::place(const std::string &name, const geometry_msgs::Pose &object)
 
     openGripper(place_location[0].post_place_posture);
 
-    // Set support surface as table2.
-    //move_group.setSupportSurfaceName("table2");
-    // Call place to place the object using the place locations given.
     auto result = move_group_.place(name, place_location);
 
-    return MoveItError(result);
+    return moveItError(result);
+}
+
+bool Grasp::placeShelf(const std::string &name, const geometry_msgs::Pose &object)
+{
+    std::vector<moveit_msgs::PlaceLocation> place_location;
+    place_location.resize(1);
+
+    place_location[0].place_pose.header.frame_id = FRAME_ID;
+    tf2::Quaternion orientation;
+    orientation.setRPY(0, 0, -(M_PI / 2.0));
+    place_location[0].place_pose.pose.orientation = tf2::toMsg(orientation);
+    place_location[0].place_pose.pose.position = object.position;
+    addPoints(place_location[0].place_pose.pose.position, gripper_offset_); //< offset the gripper position relative to the object.
+
+    place_location[0].pre_place_approach.direction.header.frame_id = FRAME_ID;
+    place_location[0].pre_place_approach.direction.vector.x = 1.0;
+    place_location[0].pre_place_approach.min_distance = 0.095;
+    place_location[0].pre_place_approach.desired_distance = 0.115;
+
+    place_location[0].post_place_retreat.direction.header.frame_id = FRAME_ID;
+    place_location[0].post_place_retreat.direction.vector.x = -0.5;
+    place_location[0].post_place_retreat.min_distance = 0.1;
+    place_location[0].post_place_retreat.desired_distance = 0.25;
+
+    openGripper(place_location[0].post_place_posture);
+
+    auto result = move_group_.place(name, place_location);
+
+    return moveItError(result);
 }
 
 void Grasp::addBottleObject(const std::string &name, const geometry_msgs::Pose &bottle)
@@ -126,6 +288,9 @@ void Grasp::addBottleObject(const std::string &name, const geometry_msgs::Pose &
     /* Define the pose of the object. */
     collision_object.primitive_poses.resize(1);
     collision_object.primitive_poses[0] = bottle;
+    tf2::Quaternion orientation;
+    orientation.setRPY(0, 0, 0);
+    collision_object.primitive_poses[0].orientation = tf2::toMsg(orientation);
     addPoints(collision_object.primitive_poses[0].position, bottle_offset_); //< offset the bottle position.
     collision_object.operation = collision_object.ADD;
 
@@ -327,7 +492,7 @@ void Grasp::setupScene()
     planning_scene_.applyCollisionObjects(collision_objects);
 }
 
-bool Grasp::moveBottle(geometry_msgs::Pose current, geometry_msgs::Pose target)
+bool Grasp::moveBottle(geometry_msgs::Pose &current, geometry_msgs::Pose &target)
 {
     ROS_INFO_STREAM("Adding bottle");
     addBottleObject("bottle", current);
@@ -336,6 +501,8 @@ bool Grasp::moveBottle(geometry_msgs::Pose current, geometry_msgs::Pose target)
     ROS_INFO_STREAM("Picking bottle");
     if (!pick("bottle", current))
     {
+        ROS_INFO_STREAM("Removing bottle\n");
+        removeBottleObject("bottle");
         return false;
     }
 
@@ -343,6 +510,66 @@ bool Grasp::moveBottle(geometry_msgs::Pose current, geometry_msgs::Pose target)
     ROS_INFO_STREAM("Placing bottle");
 
     if (!place("bottle", target))
+    {
+        ROS_INFO_STREAM("Removing bottle\n");
+        removeBottleObject("bottle");
+        return false;
+    }
+
+    ROS_INFO_STREAM("Removing bottle\n");
+    removeBottleObject("bottle");
+
+    return true;
+}
+bool Grasp::moveBottleToShelf(geometry_msgs::Pose &current, geometry_msgs::Pose &target)
+{
+    ROS_INFO_STREAM("Moving Bottle from Bar to Shelf");
+    ROS_INFO_STREAM("Adding bottle");
+    addBottleObject("bottle", current);
+    ros::WallDuration(0.1).sleep();
+
+    ROS_INFO_STREAM("Picking bottle");
+    if (!pickBar("bottle", current))
+    {
+        ROS_INFO_STREAM("Removing bottle\n");
+        removeBottleObject("bottle");
+        return false;
+    }
+
+    ros::WallDuration(0.1).sleep();
+    ROS_INFO_STREAM("Placing bottle");
+
+    if (!placeShelf("bottle", target))
+    {
+        ROS_INFO_STREAM("Removing bottle\n");
+        removeBottleObject("bottle");
+        return false;
+    }
+
+    ROS_INFO_STREAM("Removing bottle\n");
+    removeBottleObject("bottle");
+
+    return true;
+}
+bool Grasp::moveBottleToBar(geometry_msgs::Pose &current, geometry_msgs::Pose &target)
+{
+    ROS_INFO_STREAM("Moving Bottle from Shelf to Bar");
+    ROS_INFO_STREAM("Adding bottle");
+    addBottleObject("bottle", current);
+    ros::WallDuration(0.1).sleep();
+
+    ROS_INFO_STREAM("Picking bottle");
+    if (!pickShelf("bottle", current))
+    {
+        ROS_INFO_STREAM("Removing bottle\n");
+        removeBottleObject("bottle");
+        return false;
+    }
+
+    ros::WallDuration(0.1).sleep();
+    ROS_INFO_STREAM("Placing bottle");
+
+    if (!placeBar("bottle", target))
     {
         ROS_INFO_STREAM("Removing bottle\n");
         removeBottleObject("bottle");
@@ -362,20 +589,45 @@ bool Grasp::graspingCallback(grasping::move::Request &req, grasping::move::Respo
 
     ROS_INFO_STREAM("Moving from pose: (" << s_pose.x << ", " << s_pose.y << ", " << s_pose.z << ")");
     ROS_INFO_STREAM("To pose: (" << e_pose.x << ", " << e_pose.y << ", " << e_pose.z << ")\n");
-
     res.success = moveBottle(req.current, req.target);
 
-    ROS_INFO_STREAM("Grasing done\n");
+    ROS_INFO_STREAM("Grasping done\n");
     return true;
 }
+bool Grasp::shelfToBarCallback(grasping::move::Request &req, grasping::move::Response &res)
+{
+    auto s_pose = req.current.position;
+    auto e_pose = req.target.position;
+
+    ROS_INFO_STREAM("Moving from pose: (" << s_pose.x << ", " << s_pose.y << ", " << s_pose.z << ")");
+    ROS_INFO_STREAM("To pose: (" << e_pose.x << ", " << e_pose.y << ", " << e_pose.z << ")\n");
+    res.success = moveBottleToBar(req.current, req.target);
+
+    ROS_INFO_STREAM("Grasping done\n");
+    return true;
+}
+bool Grasp::barToShelfCallback(grasping::move::Request &req, grasping::move::Response &res)
+{
+    auto s_pose = req.current.position;
+    auto e_pose = req.target.position;
+
+    ROS_INFO_STREAM("Moving from pose: (" << s_pose.x << ", " << s_pose.y << ", " << s_pose.z << ")");
+    ROS_INFO_STREAM("To pose: (" << e_pose.x << ", " << e_pose.y << ", " << e_pose.z << ")\n");
+    res.success = moveBottleToShelf(req.current, req.target);
+
+    ROS_INFO_STREAM("Grasping done\n");
+    return true;
+}
+
 void Grasp::setGripperOffset(const geometry_msgs::Point &offset)
 {
     gripper_offset_ = offset;
 }
 
-void Grasp::setPickOffset(const geometry_msgs::Point &offset)
+void Grasp::setPickOffset(const geometry_msgs::Point &shelf_offset, const geometry_msgs::Point &bar_offset)
 {
-    pick_offset_ = offset;
+    pick_bar_offset_ = bar_offset;
+    pick_shelf_offset_ = shelf_offset;
 }
 
 void Grasp::setFetchOffset(const geometry_msgs::Point &offset)
@@ -395,17 +647,17 @@ void Grasp::addPoints(geometry_msgs::Point &pt1, const geometry_msgs::Point &pt2
     pt1.z += pt2.z;
 }
 
-void Grasp::seperateThread()
+void Grasp::addQuaternion(geometry_msgs::Quaternion &qu1, const geometry_msgs::Quaternion &qu2)
 {
-    ros::Rate rate_limiter(1.0 / 5);
-    while (ros::ok())
-    {
-
-        rate_limiter.sleep();
-    }
+    tf2::Quaternion qu1_tf;
+    tf2::Quaternion qu2_tf;
+    tf2::convert(qu1, qu1_tf);
+    tf2::convert(qu2, qu2_tf);
+    qu1_tf += qu2_tf;
+    qu1 = tf2::toMsg(qu1_tf);
 }
 
-bool Grasp::MoveItError(const moveit::planning_interface::MoveItErrorCode &ec)
+bool Grasp::moveItError(const moveit::planning_interface::MoveItErrorCode &ec)
 {
     if (ec == moveit::planning_interface::MoveItErrorCode::SUCCESS)
     {
@@ -415,4 +667,12 @@ bool Grasp::MoveItError(const moveit::planning_interface::MoveItErrorCode &ec)
     {
         return false;
     }
+}
+
+tf2::Vector3 Grasp::quaternionToVector(const geometry_msgs::Quaternion &quaternion)
+{
+    tf2::Quaternion q_tf;
+    tf2::convert(quaternion, q_tf);
+
+    return q_tf.getAxis();
 }

@@ -8,6 +8,9 @@
 #include "geometry_msgs/PoseArray.h"
 #include "grasping/move.h"
 
+// TF2
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+
 class Integration
 {
 public:
@@ -26,7 +29,8 @@ public:
 
 private:
     ros::Subscriber sub_;
-    ros::ServiceClient client_;
+    ros::ServiceClient client_shelf_to_bar_;
+    ros::ServiceClient client_bar_to_shelf_;
 
     geometry_msgs::Pose surface_;
     geometry_msgs::Point bottle_offset_;

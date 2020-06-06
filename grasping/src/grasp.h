@@ -31,25 +31,37 @@ public:
     Grasp(ros::NodeHandle &nh, std::string move_group);
 
     bool pick(const std::string &name, const geometry_msgs::Pose &object);
+    bool pickBar(const std::string &name, const geometry_msgs::Pose &object);
+    bool pickShelf(const std::string &name, const geometry_msgs::Pose &object);
     bool place(const std::string &name, const geometry_msgs::Pose &object);
+    bool placeBar(const std::string &name, const geometry_msgs::Pose &object);
+    bool placeShelf(const std::string &name, const geometry_msgs::Pose &object);
 
     void setGripperOffset(const geometry_msgs::Point &offset);
-    void setPickOffset(const geometry_msgs::Point &offset);
+    void setPickOffset(const geometry_msgs::Point &shelf_offset, const geometry_msgs::Point &bar_offset);
     void setFetchOffset(const geometry_msgs::Point &offset);
     void setBottleOffset(const geometry_msgs::Point &offset);
     void setupScene();
-    bool moveBottle(geometry_msgs::Pose current, geometry_msgs::Pose target);
+    bool moveBottle(geometry_msgs::Pose &current, geometry_msgs::Pose &target);
+    bool moveBottleToShelf(geometry_msgs::Pose &current, geometry_msgs::Pose &target);
+    bool moveBottleToBar(geometry_msgs::Pose &current, geometry_msgs::Pose &target);
 
     bool graspingCallback(grasping::move::Request &req, grasping::move::Response &res);
-    void seperateThread();
+    bool shelfToBarCallback(grasping::move::Request &req, grasping::move::Response &res);
+    bool barToShelfCallback(grasping::move::Request &req, grasping::move::Response &res);
+    tf2::Vector3 quaternionToVector(const geometry_msgs::Quaternion &quaternion);
+    void addQuaternion(geometry_msgs::Quaternion &qu1, const geometry_msgs::Quaternion &qu2);
 
 private:
     void openGripper(trajectory_msgs::JointTrajectory &posture);
     void closeGripper(trajectory_msgs::JointTrajectory &posture);
+
     void addPoints(geometry_msgs::Point &pt1, const geometry_msgs::Point &pt2);
+
     void addBottleObject(const std::string &name, const geometry_msgs::Pose &bottle);
     void removeBottleObject(const std::string &name);
-    bool MoveItError(const moveit::planning_interface::MoveItErrorCode &ec);
+
+    bool moveItError(const moveit::planning_interface::MoveItErrorCode &ec);
 
 public:
     ros::NodeHandle nh_;
@@ -60,10 +72,13 @@ public:
 
 private:
     geometry_msgs::Point gripper_offset_;
-    geometry_msgs::Point pick_offset_;
+    geometry_msgs::Point pick_shelf_offset_;
+    geometry_msgs::Point pick_bar_offset_;
     geometry_msgs::Point bottle_offset_;
     geometry_msgs::Point fetch_offset_;
-    ros::ServiceServer service_;
+    ros::ServiceServer service1_;
+    ros::ServiceServer service2_;
+    ros::ServiceServer service3_;
 };
 
 #endif // GRASP_H

@@ -2,6 +2,9 @@
 #include <thread>
 #include "integration.h"
 
+// TF2
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+
 void visionCallback(const geometry_msgs::PoseArray::ConstPtr &msg)
 {
     ROS_INFO_STREAM("Vision callback Main");
@@ -32,6 +35,11 @@ int main(int argc, char **argv)
     surface.position.x = 0.50;
     surface.position.y = 0.75;
     surface.position.z = 1.025;
+
+    tf2::Quaternion orientation;
+    orientation.setRPY(0, 0, -(M_PI / 2));
+    surface.orientation = tf2::toMsg(orientation);
+
     integration->setSurface(surface);
 
     ros::spin();

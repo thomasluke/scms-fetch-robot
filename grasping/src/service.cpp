@@ -17,6 +17,11 @@ bool graspingCallback(grasping::move::Request &req, grasping::move::Response &re
     return true;
 }
 
+// void printV(tf2::Vector3 v)
+// {
+//     ROS_INFO_STREAM("Vector: (" << v.getX() << ", " << v.getY() << ", " << v.getZ() << ")");
+// }
+
 int main(int argc, char *argv[])
 {
     ros::init(argc, argv, "gripper");
@@ -31,7 +36,16 @@ int main(int argc, char *argv[])
     spinner.start();
 
     std::shared_ptr<Grasp> grasp(new Grasp(n, "arm_with_torso"));
-    std::thread t(&Grasp::seperateThread, grasp);
+
+    // tf2::Quaternion o1;
+    // o1.setRPY(0, 0, -(M_PI / 2));
+    // tf2::Quaternion o2;
+    // o2.setRPY(0, 0, 0);
+    // printV(grasp->quaternionToVector(tf2::toMsg(o1)));
+    // printV(grasp->quaternionToVector(tf2::toMsg(o2)));
+    // printV(grasp->quaternionToVector(tf2::toMsg((o2 + o1))));
+
+    // return 0;
 
     geometry_msgs::Point gripper_offset;
     gripper_offset.x = 0;
@@ -39,11 +53,15 @@ int main(int argc, char *argv[])
     gripper_offset.z = 0.1;
     grasp->setGripperOffset(gripper_offset);
 
-    geometry_msgs::Point pick_offset;
-    pick_offset.x = -0.2;
-    pick_offset.y = 0;
-    pick_offset.z = 0.0;
-    grasp->setPickOffset(pick_offset);
+    geometry_msgs::Point pick_shelf_offset;
+    pick_shelf_offset.x = -0.2;
+    pick_shelf_offset.y = 0.0;
+    pick_shelf_offset.z = 0.0;
+    geometry_msgs::Point pick_bar_offset;
+    pick_bar_offset.x = 0.0;
+    pick_bar_offset.y = -0.2;
+    pick_bar_offset.z = 0.0;
+    grasp->setPickOffset(pick_shelf_offset, pick_bar_offset);
 
     geometry_msgs::Point bottle_offset;
     bottle_offset.x = 0;
@@ -75,7 +93,6 @@ int main(int argc, char *argv[])
     // grasp->graspingCallback(move.request, move.response);
 
     ros::waitForShutdown();
-    t.join();
 
     return 0;
 }

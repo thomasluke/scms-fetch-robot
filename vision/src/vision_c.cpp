@@ -39,7 +39,7 @@ geometry_msgs::Pose Vision::imageProcessing(const std::string drink)
     // pose.position.z = (*random_double)(*nd_generator);
     pose.position.x = 1.05; //0.9
     pose.position.y = 0.10; //0.1
-    pose.position.z = 1.05;
+    pose.position.z = 1.1;
 
     return pose;
 }

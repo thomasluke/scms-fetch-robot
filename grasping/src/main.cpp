@@ -530,12 +530,12 @@ int main(int argc, char **argv)
     ros::AsyncSpinner spinner(1);
     spinner.start();
 
-   geometry_msgs::Pose fetch;
+    geometry_msgs::Pose fetch;
     fetch.position.x = -(0.49998);
     fetch.position.y = -(1.5);
     fetch.position.z = -(0.004772);
     fetch.orientation.w = 1;
-   
+
     geometry_msgs::Pose bottle;
     bottle.position.x += (0.7);
     bottle.position.y += (0);

@@ -4,7 +4,8 @@
 Integration::Integration(ros::NodeHandle nh) : nh_(nh)
 {
     sub_ = nh_.subscribe("vision_poses", 1000, &Integration::visionCallback, this);
-    client_ = nh_.serviceClient<grasping::move>("grasping_service");
+    client_shelf_to_bar_ = nh_.serviceClient<grasping::move>("grasping_service_shelf_to_bar");
+    client_bar_to_shelf_ = nh_.serviceClient<grasping::move>("grasping_service_bar_to_shelf");
 }
 Integration::~Integration() {}
 
@@ -29,6 +30,10 @@ void Integration::visionCallback(const geometry_msgs::PoseArrayConstPtr &msg)
     offset.z = 0;
     for (auto bottle : bottles)
     {
+        tf2::Quaternion orientation;
+        orientation.setRPY(0, 0, 0);
+        bottle.orientation = tf2::toMsg(orientation);
+
         grasping::move move;
         move.request.current = bottle;
         move.request.target = surface_;
@@ -36,7 +41,7 @@ void Integration::visionCallback(const geometry_msgs::PoseArrayConstPtr &msg)
 
         ROS_INFO_STREAM("Bottle: (" << bottle.position.x << ", " << bottle.position.y << ", " << bottle.position.z << ")");
 
-        if (client_.call(move))
+        if (client_shelf_to_bar_.call(move))
         {
             if (move.response.success)
             {
@@ -62,7 +67,7 @@ void Integration::visionCallback(const geometry_msgs::PoseArrayConstPtr &msg)
         move.request.current = bottle.second;
         move.request.target = bottle.first;
 
-        if (client_.call(move))
+        if (client_bar_to_shelf_.call(move))
         {
             if (!move.response.success)
             {
