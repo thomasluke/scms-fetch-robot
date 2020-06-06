@@ -365,7 +365,7 @@ void Grasp::setupScene()
         collision_object.header.frame_id = "base_link";
         collision_object.id = "bottom_shelf";
 
-        double bottom_shelf_z = 0.1;
+        double bottom_shelf_z = 0.15;
 
         /* Define the primitive and its dimensions. */
         collision_object.primitives.resize(1);

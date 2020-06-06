@@ -1,11 +1,5 @@
 <launch>
     <arg name="simulator" default="gazebo"/>
-
-    <!-- <include file="$(find scms_test)/launch/$(arg simulator).launch" /> -->
-
-    
-
-    <!-- Disco -->
-    <node name="disco" pkg="scms_test" type="disco.py" output="screen" />
+    <arg name="simulator" default="gazebo"/>
 
 </launch>
