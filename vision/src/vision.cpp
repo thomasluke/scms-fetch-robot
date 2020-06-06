@@ -1,4 +1,4 @@
-/*
+
 
 #include <ros/ros.h>
 #include <image_transport/image_transport.h>
@@ -19,10 +19,6 @@
 //#include <tf2_geometry_msgs.h>
 
 static const std::string OPENCV_WINDOW = "Image window";
-geometry_msgs::Pose pose_vodka;
-geometry_msgs::Pose pose_vermouth;
-geometry_msgs::Pose pose_gin;
-geometry_msgs::Pose pose_campari;
 
 
 //tf::TransformListener listener;
@@ -76,32 +72,30 @@ public:
     image_pub_.publish(cv_ptr->toImageMsg());
   }
 };
-
-geometry_msgs::Pose find_bottle (const std::string alchol)
-  {
-
-
-
-  }
-
+/*
 class ar_finder 
 {
-
-  ros::Subscriber see_ = vs_.subscribe<ar_track_alvar_msgs::AlvarMarker>("AR_TRACK_ALVAR_MSGS_MESSAGE_ALVARMARKERS_H",1,ar_finder_Callback);
+ ros::NodeHandle& vs_;
+ ros::Subscriber see_;
 
   public :
-  ar_finder() ;
-  ar_finder(std::string);
+  ar_finder() 
+  {
+    // Subscrive to input video feed and publish output video feed
+   see_ = vs_.subscribe<ar_track_alvar_msgs::AlvarMarker>("AR_TRACK_ALVAR_MSGS_MESSAGE_ALVARMARKERS_H",1,ar_finder_Callback)
+  }
+
+  ~ImageConverter()
+
+  ar_finder(std::string)
+
   geometry_msgs::Pose pose_vodka;
   geometry_msgs::Pose pose_vermouth;
   geometry_msgs::Pose pose_gin;
   geometry_msgs::Pose pose_campari;
 
-  ar_track_alvar_msgs::AlvarMarkersConstPtr& last_msg_;
-
-  tf::TransformListener listener;
+  ar_track_alvar_msgs::AlvarMarkersConstPtr& last_msg_;  
   
-  ros::NodeHandle& vs_;
 private:
   void ar_finder_Callback(ar_track_alvar_msgs::AlvarMarkersConstPtr& mag)
    {
@@ -175,6 +169,36 @@ geometry_msgs::Pose ar_finder::get_drink (std::string drink)
    
 };
 
+
+
+
+int main(int argc, char **argv) {
+  ros::init(argc, argv, "arlistener");
+  ros::NodeHandle nh;
+  ros::Subscriber sub = nh.subscribe("ar_pose_marker", 1, cb);
+  ros::spin();
+  return 0;
+
+}
+
+*/
+
+int main(int argc, char **argv)
+{
+  /*
+  ros::NodeHandle vs_;
+  ros::Subscriber see_;
+  see_ = vs_.subscribe("AR_TRACK_ALVAR_MSGS_MESSAGE_ALVARMARKERS_H");
+  see_.getTopic
+  */
+  //ros::Subscriber(al/ar_track_alvar_msgs);
+  ros::init(argc, argv, "image_converter");
+  ImageConverter ic;
+  ros::spin();
+  return 0;
+}
+
+
 /*
   tf::Transform cam_to_target;
   tf::poseMsgToTF(position_->pose.pose, cam_to_target);
@@ -192,34 +216,3 @@ geometry_msgs::Pose ar_finder::get_drink (std::string drink)
 */
 
 /*
-
-
-int main(int argc, char **argv) {
-  ros::init(argc, argv, "arlistener");
-  ros::NodeHandle nh;
-  ros::Subscriber sub = nh.subscribe("ar_pose_marker", 1, cb);
-  ros::spin();
-  return 0;
-
-}
-
-};
-
-
-int main(int argc, char **argv)
-{
-  /*
-  ros::NodeHandle vs_;
-  ros::Subscriber see_;
-  see_ = vs_.subscribe("AR_TRACK_ALVAR_MSGS_MESSAGE_ALVARMARKERS_H");
-  see_.getTopic
-  
-  //ros::Subscriber(al/ar_track_alvar_msgs);
-  ros::init(argc, argv, "image_converter");
-  ImageConverter ic;
-  ros::spin();
-  return 0;
-}
-
-*/
-
