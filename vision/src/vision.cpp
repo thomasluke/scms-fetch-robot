@@ -1,4 +1,4 @@
-
+/*
 
 #include <ros/ros.h>
 #include <image_transport/image_transport.h>
@@ -145,7 +145,7 @@ public:
 geometry_msgs::Pose ar_finder::get_drink (std::string drink)
     {
       geometry_msgs::Pose pose
-      std::string which_one = drink;
+      std::string "which_one" = drink;
            switch (which_one)
            {
      case 'vermouth' :
@@ -175,44 +175,7 @@ geometry_msgs::Pose ar_finder::get_drink (std::string drink)
    
 };
 
-
- geometry_msgs::Pose return_pose (const ar_track_alvar_msgs::AlvarMarkerConstPtr& msg, std::string drink)
-  {
-    geometry_msgs::Pose pose_  ;
-   
-
-  }
- 
- void hi (const ar_track_alvar_msgs::AlvarMarkerConstPtr& msg)
- {
-   
-   ar_track_alvar_msgs::AlvarMarkerConstPtr msg_ = msg;
-   int drink ;
-   tf::TransformListener listener_;
-   drink = msg_->id ;
-  
-
-   switch (drink){
-     case '1' :
-       ROS_INFO_STREAM("vermouth");
-       pose_vodka_.pos = last_msg_;
-       break;
-     case '25':
-       ROS_INFO_STREAM("campari");
-       position_ = last_msg_;
-       break;
-     case '3':
-       ROS_INFO_STREAM("gin");
-       position_ = last_msg_;
-       break;
-     case '4':
-        ROS_INFO_STREAM("vodka");
-        position_ = last_msg_;
-        break;
-     default :
-        ROS_INFO_STREAM("can't find any drinks");
-    }
-
+/*
   tf::Transform cam_to_target;
   tf::poseMsgToTF(position_->pose.pose, cam_to_target);
 
@@ -225,11 +188,10 @@ geometry_msgs::Pose ar_finder::get_drink (std::string drink)
   tf::poseTFToMsg(req_to_target, res.pose);
   return true;
  
+/*
+*/
 
-
-};
-
-
+/*
 
 
 int main(int argc, char **argv) {
@@ -251,7 +213,7 @@ int main(int argc, char **argv)
   ros::Subscriber see_;
   see_ = vs_.subscribe("AR_TRACK_ALVAR_MSGS_MESSAGE_ALVARMARKERS_H");
   see_.getTopic
-  */
+  
   //ros::Subscriber(al/ar_track_alvar_msgs);
   ros::init(argc, argv, "image_converter");
   ImageConverter ic;
@@ -259,5 +221,5 @@ int main(int argc, char **argv)
   return 0;
 }
 
-
+*/
 
