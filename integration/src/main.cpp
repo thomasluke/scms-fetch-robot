@@ -33,8 +33,8 @@ int main(int argc, char **argv)
 
     geometry_msgs::Pose surface;
     surface.position.x = 0.50;
-    surface.position.y = 0.75;
-    surface.position.z = 1.025;
+    surface.position.y = 0.8;
+    surface.position.z = 1.05;
 
     tf2::Quaternion orientation;
     orientation.setRPY(0, 0, -(M_PI / 2));
