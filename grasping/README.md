@@ -39,6 +39,7 @@ The ROS service contains a geometry pose which contains the current position and
 
 - MoveIT
 - TF2
+- Geometry_msgs
 - roscpp
 - message_generation
 - /srv/move.srv
