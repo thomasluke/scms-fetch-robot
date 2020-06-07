@@ -1,8 +1,10 @@
 # scms-fetch-robot -vision
 
+(Author: Natalie Peden)
+
 General usage notes 
 --------------------------------------------
-- launch the base code for bar_simulation  gazebo.launch the vision was though gazebo, this caused problems as if the lighting wasn't correct it cant read 
+- launch the base code for bar_simulation  gazebo.launch the vision was though gazebo, this caused problems as if the lighting wasn't correct it cant read the ar tags correctly. 
 - launch  the ar node with vision track.launch 
 - rosrun vision vision 
 - this should produce the pose of the ar tags that the robot can see/ and know which drinks it is looking at 
