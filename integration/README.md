@@ -14,5 +14,6 @@ The integration code takes the data published by the vision system and uses it t
 
 ## Code
 
-It calls custom ROS services writt
+It calls custom ROS services in the grasping package.
+The 
 
