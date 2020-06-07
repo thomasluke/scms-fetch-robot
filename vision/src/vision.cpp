@@ -19,6 +19,8 @@
 #include <string>
 //#include <tf2_geometry_msgs.h>
 
+//this is the code to see the tthough the camera 
+
 //000tatic const std::string OPENCV_WINDOW = "Image window";
 
 
@@ -73,7 +75,7 @@ public:
     image_pub_.publish(cv_ptr->toImageMsg());
   }
 };
-
+*/
 class ar_finder {
 
   public :
@@ -109,6 +111,10 @@ class ar_finder {
       { pose_vermouth.position.x = mag->markers[0].pose.pose.position.x ;
         pose_vermouth.position.z = mag->markers[0].pose.pose.orientation.z ;
         pose_vermouth.position.y = mag->markers[0].pose.pose.orientation.y ;}
+          ROS_INFO_STREAM("vermouth postion ... (x,y,z");
+        ROS_INFO_STREAM(pose_vermouth.position.x);
+        ROS_INFO_STREAM(pose_vermouth.position.y);
+        ROS_INFO_STREAM(pose_vermouth.position.z);
        break;
      case '25':
        ROS_INFO_STREAM("campari");
@@ -116,6 +122,10 @@ class ar_finder {
       { pose_campari.position.x = mag->markers[0].pose.pose.position.x ;
         pose_campari.position.z = mag->markers[0].pose.pose.orientation.z ;
         pose_campari.position.y = mag->markers[0].pose.pose.orientation.y ;}
+          ROS_INFO_STREAM("campari postion ... (x,y,z");
+        ROS_INFO_STREAM(pose_campari.position.x);
+        ROS_INFO_STREAM(pose_campari.position.y);
+        ROS_INFO_STREAM(pose_campari.position.z);
        break; 
      case '3':
        ROS_INFO_STREAM("gin");
@@ -123,6 +133,11 @@ class ar_finder {
       { pose_gin.position.x = mag->markers[0].pose.pose.position.x ;
         pose_gin.position.z = mag->markers[0].pose.pose.orientation.z ;
         pose_gin.position.y = mag->markers[0].pose.pose.orientation.y ;}
+        ROS_INFO_STREAM("gin postion ... (x,y,z");
+        ROS_INFO_STREAM(pose_gin.position.x);
+        ROS_INFO_STREAM(pose_gin.position.y);
+        ROS_INFO_STREAM(pose_gin.position.z);
+         
        break;
 
      case '4':
@@ -131,6 +146,10 @@ class ar_finder {
       { pose_vodka.position.x = mag->markers[0].pose.pose.position.x ;
          pose_vodka.position.z = mag->markers[0].pose.pose.orientation.z ;
          pose_vodka.position.y = mag->markers[0].pose.pose.orientation.y ; }
+        ROS_INFO_STREAM("vodka postion ... (x,y,z");
+        ROS_INFO_STREAM(pose_vodka.position.x);
+        ROS_INFO_STREAM(pose_vodka.position.y);
+        ROS_INFO_STREAM(pose_vodka.position.z);
         break;
 
      default :
@@ -175,29 +194,7 @@ geometry_msgs::Pose ar_finder::get_drink (const std::string drink)
 
     
   
-*/
-
-
-int main(int argc, char **argv)
-{
-  /*
-  ros::NodeHandle vs_;
-  ros::Subscriber see_;
-  see_ = vs_.subscribe("AR_TRACK_ALVAR_MSGS_MESSAGE_ALVARMARKERS_H");
-  see_.getTopic
-  */
-  //ros::Subscriber(al/ar_track_alvar_msgs);
-  
-  ros::init(argc, argv, "ar_pose_marker");
-  //ros::NodeHandle vs2 ;
-
-  //ar_finder(vs2);
-  ros::spin();
-  return 0;
-}
-
-
-
+ //this is the draft for the code to get the codrdiante from the head camera link to the base link 
 /*
   tf::Transform cam_to_target;
   tf::poseMsgToTF(position_->pose.pose, cam_to_target);
@@ -213,5 +210,20 @@ int main(int argc, char **argv)
  
 
 */
+
+
+int main(int argc, char **argv)
+{
+  ros::init(argc, argv, "ar_pose_marker");
+  ros::NodeHandle vs2 ;
+
+  ar_finder(vs2);
+  ros::spin();
+  return 0;
+}
+
+
+
+
 
 
