@@ -16,13 +16,14 @@
 #include <geometry_msgs/PointStamped.h>
 #include "geometry_msgs/PoseArray.h"
 #include <tf/transform_datatypes.h>
+#include <string>
 //#include <tf2_geometry_msgs.h>
 
-static const std::string OPENCV_WINDOW = "Image window";
+//000tatic const std::string OPENCV_WINDOW = "Image window";
 
 
 //tf::TransformListener listener;
-
+/*
 class ImageConverter
 {
   ros::NodeHandle nh25_;
@@ -72,116 +73,110 @@ public:
     image_pub_.publish(cv_ptr->toImageMsg());
   }
 };
-/*
-class ar_finder 
-{
- ros::NodeHandle& vs_;
- ros::Subscriber see_;
+
+class ar_finder {
 
   public :
-  ar_finder() 
-  {
-    // Subscrive to input video feed and publish output video feed
-   see_ = vs_.subscribe<ar_track_alvar_msgs::AlvarMarker>("AR_TRACK_ALVAR_MSGS_MESSAGE_ALVARMARKERS_H",1,ar_finder_Callback)
-  }
-
-  ~ImageConverter()
-
-  ar_finder(std::string)
-
+  ros::NodeHandle vs_;
+  ros::Subscriber  see_;
   geometry_msgs::Pose pose_vodka;
   geometry_msgs::Pose pose_vermouth;
   geometry_msgs::Pose pose_gin;
   geometry_msgs::Pose pose_campari;
 
-  ar_track_alvar_msgs::AlvarMarkersConstPtr& last_msg_;  
+  ar_finder();
+  ar_finder(ros::NodeHandle vs_);
+
+  geometry_msgs::Pose get_drink (const std::string drink); 
+  void ar_finder_Callback(ar_track_alvar_msgs::AlvarMarkersConstPtr& mag);
   
-private:
-  void ar_finder_Callback(ar_track_alvar_msgs::AlvarMarkersConstPtr& mag)
+};
+
+ ar_finder::ar_finder(ros::NodeHandle vs) : vs_(vs)
    {
-    last_msg_ = mag;
+     ros::Subscriber  see_ = vs_.subscribe<ar_track_alvar_msgs::AlvarMarker>("ar_pose_marker",1, &ar_finder::ar_finder_Callback);
+  }
+
+  void ar_finder::ar_finder_Callback(ar_track_alvar_msgs::AlvarMarkersConstPtr& mag)
+   {  
     geometry_msgs::Pose pose;
-    int drink;
-    drink = last_msg_->markers[0].id ;
+    int32_t drink;
+    drink = mag->markers[0].id ;
      switch (drink){
      case '1' :
        ROS_INFO_STREAM("vermouth");
-       pose_vermouth.position.x = last_msg_->markers[0].pose.pose.position.x ;
-       pose_vermouth.position.z = last_msg_->markers[0].pose.pose.orientation.z ;
-       pose_vermouth.position.y = last_msg_->markers[0].pose.pose.orientation.y ;
+       if (pose_vermouth.position.x == 0 & pose_vermouth.position.z == 0 & pose_vermouth.position.y == 0 )
+      { pose_vermouth.position.x = mag->markers[0].pose.pose.position.x ;
+        pose_vermouth.position.z = mag->markers[0].pose.pose.orientation.z ;
+        pose_vermouth.position.y = mag->markers[0].pose.pose.orientation.y ;}
        break;
      case '25':
        ROS_INFO_STREAM("campari");
-       pose_campari.position.x = last_msg_->markers[0].pose.pose.position.x ;
-       pose_campari.position.z = last_msg_->markers[0].pose.pose.orientation.z ;
-       pose_campari.position.y = last_msg_->markers[0].pose.pose.orientation.y ;
-       break;
+        if (pose_campari.position.x == 0 & pose_campari.position.z == 0 & pose_campari.position.y == 0 )
+      { pose_campari.position.x = mag->markers[0].pose.pose.position.x ;
+        pose_campari.position.z = mag->markers[0].pose.pose.orientation.z ;
+        pose_campari.position.y = mag->markers[0].pose.pose.orientation.y ;}
+       break; 
      case '3':
        ROS_INFO_STREAM("gin");
-       pose_gin.position.x = last_msg_->markers[0].pose.pose.position.x ;
-       pose_gin.position.z = last_msg_->markers[0].pose.pose.orientation.z ;
-       pose_gin.position.y = last_msg_->markers[0].pose.pose.orientation.y ;
+       if (pose_gin.position.x == 0 & pose_gin.position.z == 0 & pose_gin.position.y == 0 )
+      { pose_gin.position.x = mag->markers[0].pose.pose.position.x ;
+        pose_gin.position.z = mag->markers[0].pose.pose.orientation.z ;
+        pose_gin.position.y = mag->markers[0].pose.pose.orientation.y ;}
        break;
 
      case '4':
         ROS_INFO_STREAM("vodka");
-       pose_vodka.position.x = last_msg_->markers[0].pose.pose.position.x ;
-       pose_vodka.position.z = last_msg_->markers[0].pose.pose.orientation.z ;
-       pose_vodka.position.y = last_msg_->markers[0].pose.pose.orientation.y ;
+        if (pose_vodka.position.x == 0 & pose_vodka.position.z == 0 & pose_vodka.position.y == 0 )
+      { pose_vodka.position.x = mag->markers[0].pose.pose.position.x ;
+         pose_vodka.position.z = mag->markers[0].pose.pose.orientation.z ;
+         pose_vodka.position.y = mag->markers[0].pose.pose.orientation.y ; }
         break;
 
      default :
         ROS_INFO_STREAM("can't find any drinks");
     }
    }
-public:
 
-geometry_msgs::Pose ar_finder::get_drink (std::string drink)
+geometry_msgs::Pose ar_finder::get_drink (const std::string drink)
     {
-      geometry_msgs::Pose pose
-      std::string "which_one" = drink;
-           switch (which_one)
-           {
-     case 'vermouth' :
-     pose = pose_vermouth
-       return pose
-       break;
-     case 'campari':
-       pose = pose_campari
-       return pose
-       break;
-     case 'gin':
-       pose = pose_gin
-       return pose
-       break;
+   std::string vermouth ;
+   std::string campari ;
+   std::string gin ;
+   std::string vodka;
 
-     case 'vodka':
-        pose = pose_vodka
-       return pose
-        break;
+      geometry_msgs::Pose pose ;
+         
+     if (drink == vermouth) 
+      {
+       pose = pose_vermouth ;
+       return pose ;
+      }
+    
+       else if (drink == campari)
+       {
+       pose = pose_campari ;
+       return pose ;
+       }
+     else if (drink == gin)
+       {
+       pose = pose_gin ;
+       return pose ;
+       }
 
-     default :
-        ROS_INFO_STREAM("can't find any drinks");
+    else if(drink == vodka)
+        {
+       pose = pose_campari ;
+       return pose ;
+       }
+
+     else  ROS_INFO_STREAM("can't find any drinks");
     }
 
-    }
+    
   
-   
-};
-
-
-
-
-int main(int argc, char **argv) {
-  ros::init(argc, argv, "arlistener");
-  ros::NodeHandle nh;
-  ros::Subscriber sub = nh.subscribe("ar_pose_marker", 1, cb);
-  ros::spin();
-  return 0;
-
-}
-
 */
+
 
 int main(int argc, char **argv)
 {
@@ -192,11 +187,15 @@ int main(int argc, char **argv)
   see_.getTopic
   */
   //ros::Subscriber(al/ar_track_alvar_msgs);
-  ros::init(argc, argv, "image_converter");
-  ImageConverter ic;
+  
+  ros::init(argc, argv, "ar_pose_marker");
+  //ros::NodeHandle vs2 ;
+
+  //ar_finder(vs2);
   ros::spin();
   return 0;
 }
+
 
 
 /*

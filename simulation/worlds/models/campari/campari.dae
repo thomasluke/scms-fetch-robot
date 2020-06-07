@@ -452,7 +452,7 @@
             <profile_COMMON>
                 <newparam sid="ID58">
                     <surface type="2D">
-                        <init_from>ID57</init_from>
+                        <init_from>campari/MarkerData_0_25.png</init_from>
                     </surface>
                 </newparam>
                 <newparam sid="ID59">
@@ -498,7 +498,7 @@
         <image id="ID19">
             <init_from>campari/Aluminum.jpg</init_from>
         </image>
-        <image id="ID57">
+        <image id="campari/MarkerData_0_25.png" name="campari/MarkerData_0_25.png">
             <init_from>campari/MarkerData_0_25.png</init_from>
         </image>
         <image id="ID71">
