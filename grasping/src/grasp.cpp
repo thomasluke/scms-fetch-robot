@@ -33,8 +33,8 @@ void Grasp::closeGripper(trajectory_msgs::JointTrajectory &posture)
 
     posture.points.resize(1);
     posture.points[0].positions.resize(2);
-    posture.points[0].positions[0] = 0.00;
-    posture.points[0].positions[1] = 0.00;
+    posture.points[0].positions[0] = 0.0346;
+    posture.points[0].positions[1] = 0.0346;
     posture.points[0].time_from_start = ros::Duration(0.5);
 }
 
@@ -153,6 +153,7 @@ bool Grasp::pickShelf(const std::string &name, const geometry_msgs::Pose &object
     /* Defined with respect to frame_id */
     grasps[0].post_grasp_retreat.direction.header.frame_id = FRAME_ID;
     grasps[0].post_grasp_retreat.direction.vector.x = -0.5;
+    grasps[0].post_grasp_retreat.direction.vector.z = 0.1;
     grasps[0].post_grasp_retreat.min_distance = 0.1;
     grasps[0].post_grasp_retreat.desired_distance = 0.25;
 
@@ -319,7 +320,7 @@ void Grasp::setupScene()
         collision_object.primitives.resize(1);
         collision_object.primitives[0].type = collision_object.primitives[0].BOX;
         collision_object.primitives[0].dimensions.resize(3);
-        collision_object.primitives[0].dimensions[0] = 0.9;
+        collision_object.primitives[0].dimensions[0] = 1.5;
         collision_object.primitives[0].dimensions[1] = 1.6;
         collision_object.primitives[0].dimensions[2] = left_bench_z;
 
@@ -345,7 +346,7 @@ void Grasp::setupScene()
         collision_object.primitives.resize(1);
         collision_object.primitives[0].type = collision_object.primitives[0].BOX;
         collision_object.primitives[0].dimensions.resize(3);
-        collision_object.primitives[0].dimensions[0] = 0.9;
+        collision_object.primitives[0].dimensions[0] = 1.5;
         collision_object.primitives[0].dimensions[1] = 1.6;
         collision_object.primitives[0].dimensions[2] = right_bench_z;
 
@@ -365,20 +366,20 @@ void Grasp::setupScene()
         collision_object.header.frame_id = "base_link";
         collision_object.id = "bottom_shelf";
 
-        double bottom_shelf_z = 0.15;
+        double bottom_shelf_z = 0.2;
 
         /* Define the primitive and its dimensions. */
         collision_object.primitives.resize(1);
         collision_object.primitives[0].type = collision_object.primitives[0].BOX;
         collision_object.primitives[0].dimensions.resize(3);
-        collision_object.primitives[0].dimensions[0] = 0.4;
+        collision_object.primitives[0].dimensions[0] = 0.6;
         collision_object.primitives[0].dimensions[1] = 4.8;
         collision_object.primitives[0].dimensions[2] = bottom_shelf_z;
 
         /* Define the pose of the table. */
         collision_object.primitive_poses.resize(1);
         collision_object.primitive_poses[0].position = fetch_offset_;
-        collision_object.primitive_poses[0].position.x += 1.8;
+        collision_object.primitive_poses[0].position.x += 1.75;
         collision_object.primitive_poses[0].position.y += 1.5;
         collision_object.primitive_poses[0].position.z += 1.06 - (bottom_shelf_z / 2);
         collision_object.operation = collision_object.ADD;
@@ -397,14 +398,14 @@ void Grasp::setupScene()
         collision_object.primitives.resize(1);
         collision_object.primitives[0].type = collision_object.primitives[0].BOX;
         collision_object.primitives[0].dimensions.resize(3);
-        collision_object.primitives[0].dimensions[0] = 0.4;
+        collision_object.primitives[0].dimensions[0] = 0.6;
         collision_object.primitives[0].dimensions[1] = 4.8;
         collision_object.primitives[0].dimensions[2] = top_shelf_z;
 
         /* Define the pose of the table. */
         collision_object.primitive_poses.resize(1);
         collision_object.primitive_poses[0].position = fetch_offset_;
-        collision_object.primitive_poses[0].position.x += 1.8;
+        collision_object.primitive_poses[0].position.x += 1.75;
         collision_object.primitive_poses[0].position.y += 1.5;
         collision_object.primitive_poses[0].position.z += (1.06 + 0.3) + (top_shelf_z / 2);
         collision_object.operation = collision_object.ADD;
@@ -449,14 +450,14 @@ void Grasp::setupScene()
         collision_object.primitives.resize(1);
         collision_object.primitives[0].type = collision_object.primitives[0].BOX;
         collision_object.primitives[0].dimensions.resize(3);
-        collision_object.primitives[0].dimensions[0] = 0.4;
+        collision_object.primitives[0].dimensions[0] = 0.6;
         collision_object.primitives[0].dimensions[1] = 1.9;
         collision_object.primitives[0].dimensions[2] = left_shelf_z;
 
         /* Define the pose of the table. */
         collision_object.primitive_poses.resize(1);
         collision_object.primitive_poses[0].position = fetch_offset_;
-        collision_object.primitive_poses[0].position.x += 1.8;
+        collision_object.primitive_poses[0].position.x += 1.75;
         collision_object.primitive_poses[0].position.y += 2.9;
         collision_object.primitive_poses[0].position.z += 1.06 + (left_shelf_z / 2);
         collision_object.operation = collision_object.ADD;
@@ -475,14 +476,14 @@ void Grasp::setupScene()
         collision_object.primitives.resize(1);
         collision_object.primitives[0].type = collision_object.primitives[0].BOX;
         collision_object.primitives[0].dimensions.resize(3);
-        collision_object.primitives[0].dimensions[0] = 0.4;
+        collision_object.primitives[0].dimensions[0] = 0.6;
         collision_object.primitives[0].dimensions[1] = 1.9;
         collision_object.primitives[0].dimensions[2] = right_shelf_z;
 
         /* Define the pose of the table. */
         collision_object.primitive_poses.resize(1);
         collision_object.primitive_poses[0].position = fetch_offset_;
-        collision_object.primitive_poses[0].position.x += 1.8;
+        collision_object.primitive_poses[0].position.x += 1.75;
         collision_object.primitive_poses[0].position.y += 0.1;
         collision_object.primitive_poses[0].position.z += 1.06 + (right_shelf_z / 2);
         collision_object.operation = collision_object.ADD;
@@ -663,10 +664,14 @@ bool Grasp::moveItError(const moveit::planning_interface::MoveItErrorCode &ec)
     {
         return true;
     }
-    else
+    if (ec == moveit::planning_interface::MoveItErrorCode::CONTROL_FAILED)
     {
-        return false;
+        return true;
     }
+
+    ROS_WARN_STREAM("MoveIT ERROR: " << ec);
+
+    return false;
 }
 
 tf2::Vector3 Grasp::quaternionToVector(const geometry_msgs::Quaternion &quaternion)
