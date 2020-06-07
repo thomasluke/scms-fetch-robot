@@ -2095,10 +2095,10 @@
       <pose frame=''>0.44355 1.56482 1 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>1648 471000000</sim_time>
-      <real_time>0 0</real_time>
-      <wall_time>1589458259 885011865</wall_time>
-      <iterations>1648471</iterations>
+      <sim_time>2014 58000000</sim_time>
+      <real_time>59 216738646</real_time>
+      <wall_time>1591509042 954462582</wall_time>
+      <iterations>58805</iterations>
       <model name='Bar'>
         <pose frame=''>0 0 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -2122,12 +2122,12 @@
         </link>
       </model>
       <model name='beer'>
-        <pose frame=''>-2.71286 1.48099 1.05999 1e-06 -2.7e-05 0.00021</pose>
+        <pose frame=''>-2.71286 1.48099 1.05999 -1e-06 2.7e-05 0.000369</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-2.71286 1.48099 1.17499 1e-06 -2.7e-05 0.00021</pose>
+          <pose frame=''>-2.71285 1.48099 1.17499 -1e-06 2.7e-05 0.000369</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 -9.8 -1e-06 -0 0</acceleration>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
           <wrench>0 0 -3.822 0 -0 0</wrench>
         </link>
       </model>
@@ -2202,13 +2202,13 @@
         </link>
       </model>
       <model name='person_standing'>
-        <pose frame=''>-3.06508 0.279612 0 0 -0 0</pose>
+        <pose frame=''>-3.06498 0.27961 -0 -0 1e-06 -0.001065</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-3.06508 0.279612 0 0 -0 0</pose>
+          <pose frame=''>-3.06498 0.27961 -0 -0 1e-06 -0.001065</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
+          <acceleration>1.60834 1.12882 -1.5271 1.94158 1.45682 3.09689</acceleration>
+          <wrench>128.667 90.3056 -122.168 0 -0 0</wrench>
         </link>
       </model>
       <model name='table'>
@@ -2657,7 +2657,7 @@
     </model>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>-2.83216 -10.3946 6.30409 0 0.553796 1.10019</pose>
+        <pose frame=''>-0.707835 -11.6157 4.59784 -0 0.353796 1.38819</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>

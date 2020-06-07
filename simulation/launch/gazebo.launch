@@ -25,9 +25,9 @@
         <arg name="yaw" value="1.5708" />
     </include>
 
-    <!-- Start MoveIt -->
-    <include file="$(find fetch_moveit_config)/launch/move_group.launch">
-        <arg name="info" value="true"/>
-    </include>
+  //  <!-- Start MoveIt -->
+  //  <include file="$(find fetch_moveit_config)/launch/move_group.launch">
+    //    <arg name="info" value="true"/>
+    //</include>
 
 </launch>

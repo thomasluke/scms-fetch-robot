@@ -452,7 +452,7 @@
             <profile_COMMON>
                 <newparam sid="ID58">
                     <surface type="2D">
-                        <init_from>ID57</init_from>
+                        <init_from>MarkerData_0_4.png</init_from>
                     </surface>
                 </newparam>
                 <newparam sid="ID59">
@@ -498,7 +498,7 @@
         <image id="ID19">
             <init_from>vermouth/Aluminum.jpg</init_from>
         </image>
-        <image id="ID57">
+        <image id="MarkerData_0_1.png" name ="MarkerData_0_1.png">
             <init_from>vermouth/MarkerData_0_1.png</init_from>
         </image>
         <image id="ID71">
