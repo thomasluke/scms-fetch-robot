@@ -1,5 +1,7 @@
 # scms-fetch-robot -vision
 
+(Author: Natalie Peden)
+
 General usage notes 
 --------------------------------------------
 - launch the base code for bar_simulation  gazebo.launch 
