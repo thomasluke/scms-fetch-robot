@@ -1,6 +1,6 @@
 # scms-fetch-robot -vision
 
-Author Natalie Peden
+(Author: Natalie Peden)
 
 General usage notes 
 --------------------------------------------
