@@ -41,22 +41,33 @@ It was made with QT GUI.
 Upon selection of a beverage, the drink name and ingredients are published
 > GUI -> Connor (100%)
 
-> ROS -> Connor (100%)
+> ROS Component -> Connor (100%)
 
 **Vision:**
 The vision code takes the drink ingredients and maps them to the AR codes.
 It then uses the AR codes to determine the bottles in 3D space relative to the fetch robot.
 The coordinates of the bottles are published.
+> Vision -> Natalie (100%)
+
+> ROS Component -> Connor (100%)
 
 **Integration:**
 Integration is the middle man program between vision and grasping.
 It is responsible for keeping track of the beverage ingredients, ensuring they are placed on the bar and then back on the shelf.
 It takes the coordinate of an ingredient and the known bar position, then calls the ROS grasp service and awaits a response.
 After all bottles are placed on the bar surface it then issues commands to place back on the shelf in the same order.
+> ROS Component -> Connor (100%)
 
 **Grasping**
 Grasping is responsible for picking and placing the ingredients. 
 It host custom ROS services for moving bottles from the shelf to the bar, and back.
-> Launch Files -> Connor
+> MoveIT Code -> Thomas (80%) / Connor (20%)
 
-> World File -> Connor / Natalie
+> RVIS -> Thomas (100%)
+
+> ROS Component -> Connor (100%)
+
+**Arm Movement**
+> MoveIT Code -> Thomas (100%)
+
+> RVIS -> Thomas (100%)
