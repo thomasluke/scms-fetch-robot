@@ -152,8 +152,8 @@ bool Grasp::pickShelf(const std::string &name, const geometry_msgs::Pose &object
 
     /* Defined with respect to frame_id */
     grasps[0].post_grasp_retreat.direction.header.frame_id = FRAME_ID;
-    grasps[0].post_grasp_retreat.direction.vector.x = -0.5;
-    grasps[0].post_grasp_retreat.direction.vector.z = 0.1;
+    grasps[0].post_grasp_retreat.direction.vector.x = -1.5;
+    grasps[0].post_grasp_retreat.direction.vector.z = 0.05;
     grasps[0].post_grasp_retreat.min_distance = 0.1;
     grasps[0].post_grasp_retreat.desired_distance = 0.25;
 
@@ -284,7 +284,7 @@ void Grasp::addBottleObject(const std::string &name, const geometry_msgs::Pose &
     collision_object.primitives[0].dimensions.resize(3);
     collision_object.primitives[0].dimensions[0] = 0.07;
     collision_object.primitives[0].dimensions[1] = 0.07;
-    collision_object.primitives[0].dimensions[2] = 0.20;
+    collision_object.primitives[0].dimensions[2] = 0.25;
 
     /* Define the pose of the object. */
     collision_object.primitive_poses.resize(1);

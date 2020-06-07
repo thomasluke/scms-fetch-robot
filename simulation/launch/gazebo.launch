@@ -9,7 +9,7 @@
 
     <!-- Start Gazebo with a blank world -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find bar_simulation)/worlds/bar_bottles.sdf"/>
+        <arg name="world_name" value="$(find bar_simulation)/worlds/bar_updated.sdf"/>
         <arg name="debug" value="$(arg debug)" />
         <arg name="gui" value="$(arg gui)" />
         <arg name="paused" value="false"/>
@@ -25,9 +25,9 @@
         <arg name="yaw" value="1.5708" />
     </include>
 
-  //  <!-- Start MoveIt -->
-  //  <include file="$(find fetch_moveit_config)/launch/move_group.launch">
-    //    <arg name="info" value="true"/>
-    //</include>
+    <!-- Start MoveIt -->
+    <include file="$(find fetch_moveit_config)/launch/move_group.launch">
+        <arg name="info" value="true"/>
+    </include>
 
 </launch>
