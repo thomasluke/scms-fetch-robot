@@ -1,4 +1,5 @@
 # scms-fetch-robot - main
+(Authors: Connor Bougton, Thomas Harrison, Natalie Peden)
 
 Fetch Bar Robot - Group 10  
 --------------------------------------------
@@ -72,3 +73,7 @@ The arm movement is not used. It was intended to work in tangent to the gripper 
 > MoveIT Code -> Thomas (100%)
 
 > RVIS -> Thomas (100%)
+
+
+## Video Link
+[https://youtu.be/j0EaATRQ0Yw](https://youtu.be/j0EaATRQ0Yw)

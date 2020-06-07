@@ -1,4 +1,5 @@
 # scms-fetch-robot - Integration
+(Author: Connor Bougton)
 
 General usage notes 
 --------------------------------------------
@@ -13,9 +14,5 @@ The integration code takes the data published by the vision system and uses it t
 
 ## Code
 
-The drink menu uses QT GUI library for the GUI.
-After a user clicks a menu item, it and its ingredients are published using a custom ROS msg.
+It calls custom ROS services writt
 
-### ROS MSG
-
-The ROS msg contains a string for the drink name and an array of strings for the drink ingredients. 

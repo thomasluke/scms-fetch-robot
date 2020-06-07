@@ -1,4 +1,5 @@
 # scms-fetch-robot - Grasping
+(Author: Connor Bougton & Thomas Harrison)
 
 General usage notes 
 --------------------------------------------
@@ -18,3 +19,11 @@ GRAZEBO
 - send a bottle coordinate with 'rostopic pub /vision_poses geometry_msgs/PoseArray "header: [tab] [tab]'
 
 -----------------------------------
+
+## Dependencies
+
+- MoveIT
+- TF2
+- roscpp
+- message_generation
+- /srv/move.srv
