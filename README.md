@@ -29,9 +29,9 @@ Packages Explained
 ![ROS Topics](https://github.com/thomasluke/scms-fetch-robot/blob/master/rosgraph.png)
 
 
-1. The **drinks menu** publishes to the **vision system**.
-2. The **vision system** finds the coordinates of the ingredients and publishes to **integration**.
-3. **Integration** calls custom ROS services in **grasping**
+1. The **Drinks Menu** publishes to the **Vision System**.
+2. The **Vision System** finds the coordinates of the ingredients and publishes to **Integration**.
+3. **Integration** calls custom ROS services in **Grasping**
 4. **Grasping** moves the bottles and notifies **Integration** when it is ready to recieve new commands.
 
 **Simulation:**
