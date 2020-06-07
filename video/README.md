@@ -6,6 +6,11 @@
 
 Video Link
 --------------------------------------------
-https://youtu.be/j0EaATRQ0Yw
+[https://youtu.be/j0EaATRQ0Yw](https://youtu.be/j0EaATRQ0Yw)
 
+Contributions
+--------------------------------------------
+> Editing -> Thomas (100%)
+
+> Video Material -> Connor (33.3%), Thomas (33.3%), Natalie (33.3%)
 
