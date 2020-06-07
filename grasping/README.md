@@ -1,4 +1,4 @@
-# scms-fetch-robot -grasping
+# scms-fetch-robot - Grasping
 
 General usage notes 
 --------------------------------------------

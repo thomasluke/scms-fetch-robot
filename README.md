@@ -68,6 +68,7 @@ It host custom ROS services for moving bottles from the shelf to the bar, and ba
 > ROS Component -> Connor (100%)
 
 **Arm Movement**
+The arm movement is not used. It was intended to work in tangent to the gripper code. 
 > MoveIT Code -> Thomas (100%)
 
 > RVIS -> Thomas (100%)
