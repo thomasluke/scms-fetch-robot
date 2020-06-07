@@ -82,4 +82,5 @@ The arm movement is not used. It was intended to work in tangent to the gripper 
 
 
 ## Video Link
-[https://youtu.be/j0EaATRQ0Yw](https://youtu.be/j0EaATRQ0Yw)
+
+[Video and Contributions](/video/README.md)
