@@ -11,7 +11,7 @@ General usage notes
 ## About
 
 The drink menu package is the GUI for the whole project.
-It is where the end user would interact with the robot.
+It is where the end user interacts with the robot.
 
 
 ## Code
