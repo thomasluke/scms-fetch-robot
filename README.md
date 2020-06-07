@@ -15,7 +15,7 @@ RVIZ
 - run the ros vision with 'rosrun vision vision_service'
 - run the drink menu with 'rosrun drink_menu drink_menu'
 
-GRAZEBO
+GAZEBO
 
 - launch the RVIZ environment with 'roslaunch bar_simulation gazebo.launch'
 - run the ros grasping service with 'rosrun grasping grasping_service'
@@ -27,6 +27,12 @@ Packages Explained
 -----------------------------------
 
 ![ROS Topics](https://github.com/thomasluke/scms-fetch-robot/blob/master/rosgraph.png)
+
+
+1. The **drinks menu** publishes to the **vision system**.
+2. The **vision system** finds the coordinates of the ingredients and publishes to **integration**.
+3. **Integration** calls custom ROS services in **grasping**
+4. **Grasping** moves the bottles and notifies **Integration** when it is ready to recieve new commands.
 
 **Simulation:**
 This contains the Gazebo bar world file, ros launch files, and custom alcohol models.
