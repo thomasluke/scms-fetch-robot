@@ -1,5 +1,7 @@
 # scms-fetch-robot -vision
 
+Author Natalie Peden
+
 General usage notes 
 --------------------------------------------
 - launch the base code for bar_simulation  gazebo.launch the vision was though gazebo, this caused problems as if the lighting wasn't correct it cant read the ar tags correctly. 
