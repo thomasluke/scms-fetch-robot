@@ -29,16 +29,19 @@ Packages Explained
 
 **Simulation:**
 This contains the Gazebo bar world file, ros launch files, and custom alcohol models.
-> Bottles -> Connor
+> Bottles -> Connor (50%) / Natalie (50%)
 
-> Launch Files -> Connor
+> Launch Files -> Connor (100%)
 
-> World File -> Connor / Natalie
+> World File -> Connor (50%) / Natalie (50%)
 
 **Drink Menu:**
 The drink menu is the GUI interface for selecting a beverage.
 It was made with QT GUI.
 Upon selection of a beverage, the drink name and ingredients are published
+> GUI -> Connor (100%)
+
+> ROS -> Connor (100%)
 
 **Vision:**
 The vision code takes the drink ingredients and maps them to the AR codes.
@@ -51,3 +54,9 @@ It is responsible for keeping track of the beverage ingredients, ensuring they a
 It takes the coordinate of an ingredient and the known bar position, then calls the ROS grasp service and awaits a response.
 After all bottles are placed on the bar surface it then issues commands to place back on the shelf in the same order.
 
+**Grasping**
+Grasping is responsible for picking and placing the ingredients. 
+It host custom ROS services for moving bottles from the shelf to the bar, and back.
+> Launch Files -> Connor
+
+> World File -> Connor / Natalie
