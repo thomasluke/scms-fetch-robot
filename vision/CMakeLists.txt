@@ -34,7 +34,7 @@ catkin_package(
     tf2_geometry_msgs  
 )
 
-include_directories(${THIS_PACKAGE_INCLUDE_DIRS} 
+include_directories(include ${THIS_PACKAGE_INCLUDE_DIRS} 
     ${catkin_INCLUDE_DIRS}
     ${Boost_INCLUDE_DIR}
 )

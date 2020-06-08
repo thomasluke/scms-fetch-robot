@@ -7,8 +7,6 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <iostream>
-#include <stdlib.h>
-#include <stdio.h>
 #include "std_msgs/String.h"
 #include <ar_track_alvar_msgs/AlvarMarker.h>
 #include <ar_track_alvar_msgs/AlvarMarkers.h>
@@ -19,10 +17,9 @@
 #include <string>
 //#include <tf2_geometry_msgs.h>
 
-//this is the code to see the tthough the camera 
+//this is the code to see the tthough the camera
 
 //000tatic const std::string OPENCV_WINDOW = "Image window";
-
 
 //tf::TransformListener listener;
 /*
@@ -76,125 +73,132 @@ public:
   }
 };
 */
-class ar_finder {
+class ar_finder
+{
 
-  public :
-  ros::NodeHandle vs_;
-  ros::Subscriber  see_;
-  geometry_msgs::Pose pose_vodka;
-  geometry_msgs::Pose pose_vermouth;
-  geometry_msgs::Pose pose_gin;
-  geometry_msgs::Pose pose_campari;
+public:
+    ros::NodeHandle vs_;
+    ros::Subscriber see_;
+    geometry_msgs::Pose pose_vodka;
+    geometry_msgs::Pose pose_vermouth;
+    geometry_msgs::Pose pose_gin;
+    geometry_msgs::Pose pose_campari;
 
-  ar_finder();
-  ar_finder(ros::NodeHandle vs_);
+    ar_finder(ros::NodeHandle vs_);
 
-  geometry_msgs::Pose get_drink (const std::string drink); 
-  void ar_finder_Callback(ar_track_alvar_msgs::AlvarMarkersConstPtr& mag);
-  
+    geometry_msgs::Pose get_drink(const std::string drink);
+    void ar_finder_Callback(const ar_track_alvar_msgs::AlvarMarkersConstPtr &mag);
 };
 
- ar_finder::ar_finder(ros::NodeHandle vs) : vs_(vs)
-   {
-     ros::Subscriber  see_ = vs_.subscribe<ar_track_alvar_msgs::AlvarMarker>("ar_pose_marker",1, &ar_finder::ar_finder_Callback);
-  }
+ar_finder::ar_finder(ros::NodeHandle vs) : vs_(vs)
+{
+    see_ = vs_.subscribe("drink_selection", 1, &ar_finder::ar_finder_Callback, this);
+}
 
-  void ar_finder::ar_finder_Callback(ar_track_alvar_msgs::AlvarMarkersConstPtr& mag)
-   {  
+void ar_finder::ar_finder_Callback(const ar_track_alvar_msgs::AlvarMarkersConstPtr &mag)
+{
     geometry_msgs::Pose pose;
     int32_t drink;
-    drink = mag->markers[0].id ;
-     switch (drink){
-     case '1' :
-       ROS_INFO_STREAM("vermouth");
-       if (pose_vermouth.position.x == 0 & pose_vermouth.position.z == 0 & pose_vermouth.position.y == 0 )
-      { pose_vermouth.position.x = mag->markers[0].pose.pose.position.x ;
-        pose_vermouth.position.z = mag->markers[0].pose.pose.orientation.z ;
-        pose_vermouth.position.y = mag->markers[0].pose.pose.orientation.y ;}
-          ROS_INFO_STREAM("vermouth postion ... (x,y,z");
+    drink = mag->markers.at(0).id;
+    switch (drink)
+    {
+    case '1':
+        ROS_INFO_STREAM("vermouth");
+        if (pose_vermouth.position.x == 0 & pose_vermouth.position.z == 0 & pose_vermouth.position.y == 0)
+        {
+            pose_vermouth.position.x = mag->markers.at(0).pose.pose.position.x;
+            pose_vermouth.position.z = mag->markers.at(0).pose.pose.orientation.z;
+            pose_vermouth.position.y = mag->markers.at(0).pose.pose.orientation.y;
+        }
+        ROS_INFO_STREAM("vermouth postion ... (x,y,z");
         ROS_INFO_STREAM(pose_vermouth.position.x);
         ROS_INFO_STREAM(pose_vermouth.position.y);
         ROS_INFO_STREAM(pose_vermouth.position.z);
-       break;
-     case '25':
-       ROS_INFO_STREAM("campari");
-        if (pose_campari.position.x == 0 & pose_campari.position.z == 0 & pose_campari.position.y == 0 )
-      { pose_campari.position.x = mag->markers[0].pose.pose.position.x ;
-        pose_campari.position.z = mag->markers[0].pose.pose.orientation.z ;
-        pose_campari.position.y = mag->markers[0].pose.pose.orientation.y ;}
-          ROS_INFO_STREAM("campari postion ... (x,y,z");
+        break;
+    case '2':
+        ROS_INFO_STREAM("campari");
+        if (pose_campari.position.x == 0 & pose_campari.position.z == 0 & pose_campari.position.y == 0)
+        {
+            pose_campari.position.x = mag->markers.at(0).pose.pose.position.x;
+            pose_campari.position.z = mag->markers.at(0).pose.pose.orientation.z;
+            pose_campari.position.y = mag->markers.at(0).pose.pose.orientation.y;
+        }
+        ROS_INFO_STREAM("campari postion ... (x,y,z");
         ROS_INFO_STREAM(pose_campari.position.x);
         ROS_INFO_STREAM(pose_campari.position.y);
         ROS_INFO_STREAM(pose_campari.position.z);
-       break; 
-     case '3':
-       ROS_INFO_STREAM("gin");
-       if (pose_gin.position.x == 0 & pose_gin.position.z == 0 & pose_gin.position.y == 0 )
-      { pose_gin.position.x = mag->markers[0].pose.pose.position.x ;
-        pose_gin.position.z = mag->markers[0].pose.pose.orientation.z ;
-        pose_gin.position.y = mag->markers[0].pose.pose.orientation.y ;}
+        break;
+    case '3':
+        ROS_INFO_STREAM("gin");
+        if (pose_gin.position.x == 0 & pose_gin.position.z == 0 & pose_gin.position.y == 0)
+        {
+            pose_gin.position.x = mag->markers.at(0).pose.pose.position.x;
+            pose_gin.position.z = mag->markers.at(0).pose.pose.orientation.z;
+            pose_gin.position.y = mag->markers.at(0).pose.pose.orientation.y;
+        }
         ROS_INFO_STREAM("gin postion ... (x,y,z");
         ROS_INFO_STREAM(pose_gin.position.x);
         ROS_INFO_STREAM(pose_gin.position.y);
         ROS_INFO_STREAM(pose_gin.position.z);
-         
-       break;
 
-     case '4':
+        break;
+
+    case '4':
         ROS_INFO_STREAM("vodka");
-        if (pose_vodka.position.x == 0 & pose_vodka.position.z == 0 & pose_vodka.position.y == 0 )
-      { pose_vodka.position.x = mag->markers[0].pose.pose.position.x ;
-         pose_vodka.position.z = mag->markers[0].pose.pose.orientation.z ;
-         pose_vodka.position.y = mag->markers[0].pose.pose.orientation.y ; }
+        if (pose_vodka.position.x == 0 & pose_vodka.position.z == 0 & pose_vodka.position.y == 0)
+        {
+            pose_vodka.position.x = mag->markers.at(0).pose.pose.position.x;
+            pose_vodka.position.z = mag->markers.at(0).pose.pose.orientation.z;
+            pose_vodka.position.y = mag->markers.at(0).pose.pose.orientation.y;
+        }
         ROS_INFO_STREAM("vodka postion ... (x,y,z");
         ROS_INFO_STREAM(pose_vodka.position.x);
         ROS_INFO_STREAM(pose_vodka.position.y);
         ROS_INFO_STREAM(pose_vodka.position.z);
         break;
 
-     default :
+    default:
         ROS_INFO_STREAM("can't find any drinks");
     }
-   }
+}
 
-geometry_msgs::Pose ar_finder::get_drink (const std::string drink)
+geometry_msgs::Pose ar_finder::get_drink(const std::string drink)
+{
+    std::string vermouth;
+    std::string campari;
+    std::string gin;
+    std::string vodka;
+
+    geometry_msgs::Pose pose;
+
+    if (drink == vermouth)
     {
-   std::string vermouth ;
-   std::string campari ;
-   std::string gin ;
-   std::string vodka;
-
-      geometry_msgs::Pose pose ;
-         
-     if (drink == vermouth) 
-      {
-       pose = pose_vermouth ;
-       return pose ;
-      }
-    
-       else if (drink == campari)
-       {
-       pose = pose_campari ;
-       return pose ;
-       }
-     else if (drink == gin)
-       {
-       pose = pose_gin ;
-       return pose ;
-       }
-
-    else if(drink == vodka)
-        {
-       pose = pose_campari ;
-       return pose ;
-       }
-
-     else  ROS_INFO_STREAM("can't find any drinks");
+        pose = pose_vermouth;
+        return pose;
     }
 
-    
-  
- //this is the draft for the code to get the codrdiante from the head camera link to the base link 
+    else if (drink == campari)
+    {
+        pose = pose_campari;
+        return pose;
+    }
+    else if (drink == gin)
+    {
+        pose = pose_gin;
+        return pose;
+    }
+
+    else if (drink == vodka)
+    {
+        pose = pose_campari;
+        return pose;
+    }
+
+    else
+        ROS_INFO_STREAM("can't find any drinks");
+}
+
+//this is the draft for the code to get the codrdiante from the head camera link to the base link
 /*
   tf::Transform cam_to_target;
   tf::poseMsgToTF(position_->pose.pose, cam_to_target);
@@ -211,19 +215,12 @@ geometry_msgs::Pose ar_finder::get_drink (const std::string drink)
 
 */
 
-
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "ar_pose_marker");
-  ros::NodeHandle vs2 ;
+    ros::init(argc, argv, "ar_pose_marker");
+    ros::NodeHandle vs2;
 
-  ar_finder(vs2);
-  ros::spin();
-  return 0;
+    ar_finder ar(vs2);
+    ros::spin();
+    return 0;
 }
-
-
-
-
-
-
